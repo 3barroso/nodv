@@ -19,6 +19,9 @@ Clone repository, and install dependencies
 `bin/rails server`
 
 
-### Test suite
-Rspec
+### Test suite & syntax
+
+`bundle exec rspec`
+
+`rubocop`
 
