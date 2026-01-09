@@ -4,8 +4,8 @@
 Rails web app for confidential informational sharing: knowdv, nodv
 
 ## Dependencies
-Ruby version - 3.4.5
-Rails version - 8.0.2
+Ruby version - 4.0.0
+Rails version - 8.1.2
 Postgres - v17
 
 ### Contributing
