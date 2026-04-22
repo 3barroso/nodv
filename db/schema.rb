@@ -10,15 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_04_22_203944) do
+ActiveRecord::Schema[8.1].define(version: 2026_04_22_210416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "audience_types", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.string "name"
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_audience_types_on_name", unique: true
+  end
 
   create_table "phase_resources", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.bigint "phase_id", null: false
     t.bigint "resource_id", null: false
     t.datetime "updated_at", null: false
+    t.index ["phase_id", "resource_id"], name: "idx_phase_resource_unique", unique: true
     t.index ["phase_id"], name: "index_phase_resources_on_phase_id"
     t.index ["resource_id"], name: "index_phase_resources_on_resource_id"
   end
@@ -34,6 +42,16 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_203944) do
     t.index ["parent_id"], name: "index_phases_on_parent_id"
   end
 
+  create_table "resource_audience_types", force: :cascade do |t|
+    t.bigint "audience_type_id", null: false
+    t.datetime "created_at", null: false
+    t.bigint "resource_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["audience_type_id"], name: "index_resource_audience_types_on_audience_type_id"
+    t.index ["resource_id", "audience_type_id"], name: "idx_resource_audience_unique", unique: true
+    t.index ["resource_id"], name: "index_resource_audience_types_on_resource_id"
+  end
+
   create_table "resources", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -46,4 +64,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_04_22_203944) do
   add_foreign_key "phase_resources", "phases"
   add_foreign_key "phase_resources", "resources"
   add_foreign_key "phases", "phases", column: "parent_id"
+  add_foreign_key "resource_audience_types", "audience_types"
+  add_foreign_key "resource_audience_types", "resources"
 end

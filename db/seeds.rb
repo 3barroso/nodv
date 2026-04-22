@@ -7,3 +7,10 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+
+# Create Audience Type objects
+
+['Family', 'Friend', 'Self', 'Case Manager'].each do |type|
+  AudienceType.find_or_create_by!(name: type)
+end
