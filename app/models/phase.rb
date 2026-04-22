@@ -3,6 +3,9 @@ class Phase < ApplicationRecord
   belongs_to :parent, class_name: "Phase", optional: true
   has_many :sub_phases, class_name: "Phase", foreign_key: "parent_id", dependent: :destroy
 
+  has_many :phase_resources, dependent: :destroy
+  has_many :resources, through: :phase_resources
+
   acts_as_list scope: :parent
 
   scope :main_phases, -> { where(parent_id: nil).order(:position) }
