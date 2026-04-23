@@ -1,0 +1,22 @@
+<h1>Phase</h1>
+
+<div id="phase">
+  <div id="phase-details">
+    <%= @phase.name %>
+    <% if @phase.parent_id? %>
+      <div id="phase-parent">
+        <%= @phase.parent.name %>
+        <%= link_to "Parent Phase", phase_path(@phase.parent_id) %>
+      </div>
+    <% end %>
+
+    <% if @phase.sub_phases.present? %>
+      <div id="sub-phases">
+        <% @phase.sub_phases.each do |phase| %>
+          <%= phase.name %>
+          <%= link_to "See Phase", phase_path(phase.id) %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

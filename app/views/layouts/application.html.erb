@@ -23,6 +23,14 @@
   </head>
 
   <body>
+    <nav>
+      <%= link_to "Timeline", root_path %>
+      <%= button_to "Log Out", session_path, method: :delete if authenticated? %>
+    </nav>
+
+    <div class="notice"><%= flash[:notice] %></div>
+    <div class="alert"><%= flash[:alert] %></div>
+
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>

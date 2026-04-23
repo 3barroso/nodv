@@ -10,7 +10,14 @@
 
 
 # Create Audience Type objects
-
+puts "~~~~~~ Creating Audience Type Objects ~~~~~~"
 ['Family', 'Friend', 'Self', 'Case Manager'].each do |type|
   AudienceType.find_or_create_by!(name: type)
 end
+
+# Admin User
+puts "~~~~~~ Creating Admin user ~~~~~~"
+User.create!(email_address: "admin@nodv.org", admin: true, password: "hello", password_confirmation: "hello")
+
+puts "~~~~~~ Creating Author user ~~~~~~"
+User.create!(email_address: "author@nodv.org", password: "world", password_confirmation: "world")
