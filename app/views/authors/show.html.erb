@@ -1,0 +1,15 @@
+<h1><%= @author.pen_name %></h1>
+
+<h2>Resources</h2>
+<% @author.published_resources.each do |resource| %>
+  <div class="resource-card">
+    <h3><%= resource.name %></h3>
+    
+    <p>Featured in Phases:</p>
+    <ul>
+      <% resource.phases.each do |phase| %>
+        <li><%= phase.name %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

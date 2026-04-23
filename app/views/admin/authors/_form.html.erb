@@ -1,0 +1,42 @@
+<%= form_with(model: [:admin, author], class: "contents") do |form| %>
+  <% if author.errors.any? %>
+    <div id="error_explanation" class="alert">
+      <h2><%= pluralize(author.errors.count, "error") %> prohibited this author from being saved:</h2>
+      <ul>
+        <% author.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :pen_name, "Author Pen Name" %>
+    <%= form.text_field :pen_name, 
+        class: "",
+        placeholder: "Margret Thatcher" %>
+    <p class="text-sm text-gray-500 mt-1">This name will be attached to any resources you create.</p>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :information, "Author Information" %>
+    <%= form.text_field :information, 
+        class: "",
+        placeholder: "I have a passion for justice" %>
+    <p class="text-sm text-gray-500 mt-1">Details you want to share about this author.</p>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :primary, "Primary Author" %>
+    <%= form.check_box :information, 
+        class: "" %>
+    <p class="text-sm text-gray-500 mt-1">Default to this author</p>
+  </div>
+
+  <div class="inline">
+    <%= form.submit "Submit Author Profile", 
+        class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer hover:bg-blue-700" %>
+    
+    <%= link_to "Cancel", admin_authors_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  </div>
+<% end %>

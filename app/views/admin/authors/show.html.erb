@@ -1,0 +1,15 @@
+<h1>Author</h1>
+
+<div>
+  <%= @author.pen_name %>
+</div>
+
+<% if @resources.present? %>
+  <div>
+    Author Created Resources
+    <% @resources.each do |resource| %>
+      <%= resource.name %>
+      <%= link_to "See Resource", resource_path(resource) %>
+    <% end %>
+  </div>
+<% end %>

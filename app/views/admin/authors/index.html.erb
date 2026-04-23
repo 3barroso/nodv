@@ -1,0 +1,20 @@
+<h1>Authors</h1>
+
+<div>
+  <% @authors.each do |author| %>
+    <div>
+      <%= "Author Pen Name: #{ author.pen_name }" %>
+      <%= "Author information: #{ author.information }" %>
+      <%= "Author Email: #{ author.user_email }" %>
+      <%= "Author admin: #{ author.user_admin }" %>
+    </div>
+
+    <div>
+      <% author.resources.each do |resource| %>
+        <%= "Resource name: #{resource.name}" %>
+        <%= "Resource summary: #{resource.summary}" %>
+        <%= link_to "View Resource", resource_path(resource) %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

@@ -26,6 +26,7 @@
     <nav>
       <%= link_to "Timeline", root_path %>
       <%= button_to "Log Out", session_path, method: :delete if authenticated? %>
+      <%= link_to "Profile", admin_user_path(current_user.id) if authenticated? %>
     </nav>
 
     <div class="notice"><%= flash[:notice] %></div>

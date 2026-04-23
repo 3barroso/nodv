@@ -18,8 +18,12 @@ Rails.application.routes.draw do
 
   resources :resources, only: [:index, :show]
 
+  resources :authors, only: [:show]
+
   namespace :admin do
     resources :phases, only: [:create, :destroy, :edit, :new, :update]
     resources :resources, only: [:create, :destroy, :edit, :new, :update]
+    resources :users
+    resources :authors
   end
 end
