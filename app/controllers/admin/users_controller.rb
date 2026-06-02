@@ -1,6 +1,6 @@
 class Admin::UsersController < ApplicationController
   before_action :require_admin, only: [:create, :destroy, :index, :new]
-  # show/edit can only edit themselves
+  before_action :set_user, only: [:edit, :update, :show, :destroy]
 
   def create
   end
@@ -18,5 +18,17 @@ class Admin::UsersController < ApplicationController
   end
 
   def new
+    @user = User.new
   end
+
+  private
+
+    def set_user
+      if current_user.admin?
+        @user = User.find(params[:id])
+      else
+        redirect_to root_path, alert: "Access Denied." if current_user.id != params[:id]
+        @user = current_user
+      end
+    end
 end
