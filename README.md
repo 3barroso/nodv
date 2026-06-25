@@ -16,7 +16,7 @@ Clone repository, and install dependencies
 ## Local usage
 ### Starting the application:
 
-`bin/rails server`
+`bin/dev`
 
 
 ### Test suite & syntax

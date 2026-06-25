@@ -10,6 +10,10 @@ class Admin::PhasesController < ApplicationController
   def create
   end
 
+  def index
+    @phases = Phase.all.includes(:resources)
+  end
+
   def destroy
   end
 end

@@ -17,22 +17,28 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
-    <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%# Tailwind CSS compiled output %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
     <nav>
       <%= link_to "Timeline", root_path %>
-      <%= button_to "Log Out", session_path, method: :delete if authenticated? %>
-      <%= link_to "Profile", admin_user_path(current_user.id) if authenticated? %>
+      <%= link_to "Resources", resources_path if !authenticated? %>
+      <% if authenticated? %>
+        <%= link_to "Resources (Public)", resources_path %>
+        <%= link_to "Resources", admin_resources_path %>
+        <%= link_to "Phases", admin_phases_path %>
+        <%= link_to "Profile", admin_user_path(current_user.id) %>
+        <%= link_to "Log Out", session_path, method: :delete %>
+      <% end %>
     </nav>
 
     <div class="notice"><%= flash[:notice] %></div>
     <div class="alert"><%= flash[:alert] %></div>
 
-    <main class="container mx-auto mt-28 px-5 flex">
+    <main class="container mx-auto mt-28 px-5">
       <%= yield %>
     </main>
   </body>

@@ -11,6 +11,10 @@ class Admin::ResourcesController < ApplicationController
   def edit
   end
 
+  def index
+    @resources = Resource.all.includes(:phases)
+  end
+
   def new
   end
 end
