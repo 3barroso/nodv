@@ -1,6 +1,6 @@
 class Admin::ResourcesController < Admin::BaseController
-  
-  # require created by them for edit / or admin user
+  before_action :set_resource, only: [:edit, :destroy]
+  before_action :ensure_resource_access, only: [:edit, :destroy]
 
   def create
   end
@@ -17,4 +17,15 @@ class Admin::ResourcesController < Admin::BaseController
 
   def new
   end
+
+  private
+    def set_resource
+      @resource = Resource.find(params[:id])
+    end
+
+    def ensure_resource_access
+      unless @resource.manageable_by?(current_user)
+        redirect_to root_path, alert: "Access Denied."
+      end
+    end
 end

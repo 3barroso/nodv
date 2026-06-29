@@ -9,6 +9,7 @@
           <%= user.present? ? user.email_address : "Unassigned user" %>
         </h2>
         <p class="text-sm text-gray-500"><%= pluralize(authors.count, "author") %></p>
+        <%= link_to "View User", admin_user_path(user), class: "inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
       </div>
 
       <div class="space-y-4">

@@ -6,8 +6,6 @@ class ResourcesController < ApplicationController
   end
 
   def show
-    @resource = Resource.find(params[:id])
+    @resource = Resource.includes(author: :user, phases: :phase_resources).find(params[:id])
   end
-  
-  # permitted params ?
 end
