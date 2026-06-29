@@ -1,4 +1,4 @@
-class Admin::ResourcesController < ApplicationController
+class Admin::ResourcesController < Admin::BaseController
   
   # require created by them for edit / or admin user
 

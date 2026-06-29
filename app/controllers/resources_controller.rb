@@ -6,7 +6,7 @@ class ResourcesController < ApplicationController
   end
 
   def show
-    @resource = Resource.find_by(params(:id))
+    @resource = Resource.find(params[:id])
   end
   
   # permitted params ?

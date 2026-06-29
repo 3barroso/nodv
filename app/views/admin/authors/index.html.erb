@@ -1,20 +1,48 @@
-<h1>Authors</h1>
+<h1 class="text-4xl font-bold mb-6">Authors</h1>
+<p class="text-sm text-gray-600 mb-8">Grouped by the linked user account and summarized by resource status.</p>
 
-<div>
-  <% @authors.each do |author| %>
-    <div>
-      <%= "Author Pen Name: #{ author.pen_name }" %>
-      <%= "Author information: #{ author.information }" %>
-      <%= "Author Email: #{ author.user_email }" %>
-      <%= "Author admin: #{ author.user_admin }" %>
-    </div>
+<% if @authors_by_user.any? %>
+  <% @authors_by_user.each do |user, authors| %>
+    <section class="mb-8">
+      <div class="mb-3 border-b border-gray-200 pb-2">
+        <h2 class="text-lg font-semibold text-slate-900">
+          <%= user.present? ? user.email_address : "Unassigned user" %>
+        </h2>
+        <p class="text-sm text-gray-500"><%= pluralize(authors.count, "author") %></p>
+      </div>
 
-    <div>
-      <% author.resources.each do |resource| %>
-        <%= "Resource name: #{resource.name}" %>
-        <%= "Resource summary: #{resource.summary}" %>
-        <%= link_to "View Resource", resource_path(resource) %>
-      <% end %>
-    </div>
+      <div class="space-y-4">
+        <% authors.each do |author| %>
+          <article class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm">
+            <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <h3 class="text-lg font-semibold text-slate-900"><%= author.pen_name %></h3>
+                <p class="text-sm text-gray-600"><%= author.information.presence || "No profile details provided." %></p>
+                <div class="mt-3 flex flex-wrap gap-2 text-sm">
+                  <span class="rounded-full bg-slate-100 px-3 py-1 text-slate-700">Email: <%= author.user_email || "Not available" %></span>
+                  <span class="rounded-full bg-slate-100 px-3 py-1 text-slate-700">Admin: <%= author.user_admin ? "Yes" : "No" %></span>
+                </div>
+              </div>
+
+              <div class="flex flex-wrap gap-2">
+                <%= link_to "Edit author", edit_admin_author_path(author), class: "inline-flex items-center rounded-md bg-slate-900 px-3 py-2 text-sm font-medium text-white hover:bg-slate-700" %>
+                <%= link_to "View author", admin_author_path(author), class: "inline-flex items-center rounded-md border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+              </div>
+            </div>
+
+            <div class="mt-4 grid gap-3 sm:grid-cols-3">
+              <% @resource_statuses.each do |status| %>
+                <div class="rounded-lg border border-gray-200 bg-slate-50 p-3">
+                  <p class="text-sm font-medium capitalize text-slate-500"><%= status %></p>
+                  <p class="mt-1 text-2xl font-semibold text-slate-900"><%= author.resources.where(status: status).count %></p>
+                </div>
+              <% end %>
+            </div>
+          </article>
+        <% end %>
+      </div>
+    </section>
   <% end %>
-</div>
+<% else %>
+  <div class="rounded-xl border border-gray-200 bg-white p-6 text-sm text-gray-600">No authors found.</div>
+<% end %>

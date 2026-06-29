@@ -1,4 +1,4 @@
-class Admin::PhasesController < ApplicationController
+class Admin::PhasesController < Admin::BaseController
   before_action :require_admin
 
   def new

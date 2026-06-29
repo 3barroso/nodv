@@ -8,8 +8,13 @@ class Author < ApplicationRecord
   
   after_save :ensure_single_primary, if: :became_primary?
 
-  delegate :email, to: :user, prefix: true, allow_nil: true
-  delegate :admin, to: :user, prefix: true, allow_nil: true
+  def user_email
+    user.respond_to?(:email) ? user.email : nil
+  end
+
+  def user_admin
+    user.respond_to?(:admin) ? user.admin : nil
+  end
 
   def manageable_by?(user)
     return false if user.nil?

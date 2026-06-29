@@ -1,0 +1,26 @@
+<div class="max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+  <h1 class="text-4xl font-bold text-slate-900">Edit profile</h1>
+  <p class="mt-2 text-sm text-gray-600">Update your account information.</p>
+
+  <%= form_with model: [:admin, @user], class: "mt-6 space-y-5" do |form| %>
+    <div>
+      <%= form.label :email_address, class: "block text-sm font-medium text-slate-700" %>
+      <%= form.email_field :email_address, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+    </div>
+
+    <div>
+      <%= form.label :password, class: "block text-sm font-medium text-slate-700" %>
+      <%= form.password_field :password, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+    </div>
+
+    <div>
+      <%= form.label :password_confirmation, class: "block text-sm font-medium text-slate-700" %>
+      <%= form.password_field :password_confirmation, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+    </div>
+
+    <div class="flex flex-wrap gap-2">
+      <%= form.submit "Save profile", class: "inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700" %>
+      <%= link_to "Cancel", admin_user_path(@user), class: "inline-flex items-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
+    </div>
+  <% end %>
+</div>

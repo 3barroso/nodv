@@ -1,8 +1,7 @@
-class Admin::AuthorsController < ApplicationController
+class Admin::AuthorsController < Admin::BaseController
   before_action :require_admin, only: [:index]
   before_action :set_author, except: [:create, :new, :index ]
   before_action :ensure_author_access, only: [:edit, :destroy, :update, :show]
-  # create public author controller & route to access `show`
 
   def create
     @author = current_user.authors.build(author_params)
@@ -21,12 +20,15 @@ class Admin::AuthorsController < ApplicationController
   end
 
   def index
-    @authors = Author.includes(:user).all
+    @authors = Author.includes(:user, :resources).all
+    @authors_by_user = @authors
+      .sort_by { |author| [author.user&.email_address.to_s.downcase, author.pen_name.to_s.downcase] }
+      .group_by { |author| author.user }
+    @resource_statuses = %w[draft published archived]
   end
 
   def show
-    @resources = @author.resources
-    # include phase information? (eager load)
+    @resources = @author.resources.includes(:phases).order(:name)
   end
 
   def new
