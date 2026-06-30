@@ -11,24 +11,27 @@
   <% end %>
 
   <div class="my-5">
-    <%= form.label :pen_name, "Author Pen Name" %>
-    <%= form.text_field :pen_name, 
+    <%= form.label :pen_name, "Author Pen Name", for: "author_pen_name" %>
+    <%= form.text_field :pen_name,
+        id: "author_pen_name",
         class: "",
         placeholder: "Margret Thatcher" %>
     <p class="text-sm text-gray-500 mt-1">This name will be attached to any resources you create.</p>
   </div>
 
   <div class="my-5">
-    <%= form.label :information, "Author Information" %>
-    <%= form.text_field :information, 
+    <%= form.label :information, "Author Information", for: "author_information" %>
+    <%= form.text_field :information,
+        id: "author_information",
         class: "",
         placeholder: "I have a passion for justice" %>
     <p class="text-sm text-gray-500 mt-1">Details you want to share about this author.</p>
   </div>
 
   <div class="my-5">
-    <%= form.label :primary, "Primary Author" %>
-    <%= form.check_box :information, 
+    <%= form.label :primary, "Primary Author", for: "author_primary" %>
+    <%= form.check_box :primary,
+        id: "author_primary",
         class: "" %>
     <p class="text-sm text-gray-500 mt-1">Default to this author</p>
   </div>
