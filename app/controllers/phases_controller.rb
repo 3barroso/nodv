@@ -6,7 +6,12 @@ class PhasesController < ApplicationController
   end
 
   def show
-    @phase = Phase.find(params[:id])
-    # include parent phases // include child phases
+    @phase = Phase.includes(
+      phase_resources: :resource,
+      sub_phases: { phase_resources: :resource }
+    ).find(params[:id])
+
+    @sub_phases = @phase.sub_phases.order(:position)
+    @phase_resources = @phase.resources.order(:name)
   end
 end

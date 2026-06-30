@@ -12,6 +12,11 @@ class Phase < ApplicationRecord
 
   validate :prevent_deep_nesting
 
+  def manageable_by?(user)
+    return false if user.nil?
+    user.admin?
+  end
+
   private
 
   def prevent_deep_nesting
