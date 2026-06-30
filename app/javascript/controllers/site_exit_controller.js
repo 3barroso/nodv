@@ -30,7 +30,7 @@ export default class extends Controller {
 
     this.escapeTimer = window.setTimeout(() => {
       this.escapePressCount = 0
-    }, 500)
+    }, 600)
 
     if (this.escapePressCount >= 2) {
       this.exitSite()
