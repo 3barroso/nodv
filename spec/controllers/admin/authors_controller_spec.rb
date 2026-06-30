@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::AuthorsController, type: :controller do
   describe 'GET #show' do
-    let(:admin) { create(:user, email_address: 'admin@example.com', password: 'password', admin: true) }
+    let(:admin) { create(:user, email: 'admin@example.com', password: 'password', admin: true) }
     let(:author) { create(:author, user: admin, pen_name: 'Test Author') }
     let!(:resource) { create(:resource, author: author, name: 'Example Resource', description: 'A published resource', status: :published) }
 

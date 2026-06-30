@@ -8,7 +8,7 @@ module Admin
       def store_last_request_path
         return unless current_user&.admin?
         return unless request.get? && !request.xhr? && request.format.html?
-        return unless request.path.start_with?('/admin')
+        return unless request.path.start_with?("/admin")
 
         current_path = request.fullpath
         if session[:current_url].present? && session[:current_url] != current_path

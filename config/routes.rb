@@ -14,15 +14,15 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
 
-  resources :phases, only: [:index, :show]
+  resources :phases, only: [ :index, :show ]
 
-  resources :resources, only: [:index, :show]
+  resources :resources, only: [ :index, :show ]
 
-  resources :authors, only: [:show]
+  resources :authors, only: [ :show ]
 
   namespace :admin do
-    resources :phases, only: [:create, :destroy, :edit, :index, :new, :update]
-    resources :resources, only: [:create, :destroy, :edit, :index, :new, :update]
+    resources :phases, only: [ :create, :destroy, :edit, :index, :new, :update ]
+    resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ]
     resources :users
     resources :authors
   end

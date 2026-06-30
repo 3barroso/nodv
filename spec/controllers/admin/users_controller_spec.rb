@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Admin::UsersController, type: :controller do
   describe 'GET #show' do
-    let(:user) { create(:user, email_address: 'owner@example.com', password: 'password') }
+    let(:user) { create(:user, email: 'owner@example.com', password: 'password') }
 
     before do
       allow(controller).to receive(:current_user).and_return(user)
@@ -23,7 +23,7 @@ RSpec.describe Admin::UsersController, type: :controller do
   end
 
   describe 'PATCH #update' do
-    let(:user) { create(:user, email_address: 'owner@example.com', password: 'password') }
+    let(:user) { create(:user, email: 'owner@example.com', password: 'password') }
 
     before do
       allow(controller).to receive(:current_user).and_return(user)
@@ -31,9 +31,9 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
 
     it 'updates the user profile information for the current user' do
-      patch :update, params: { id: user.id, user: { email_address: 'updated@example.com' } }
+      patch :update, params: { id: user.id, user: { email: 'updated@example.com' } }
 
-      expect(user.reload.email_address).to eq('updated@example.com')
+      expect(user.reload.email).to eq('updated@example.com')
       expect(response).to have_http_status(:redirect)
     end
   end

@@ -1,5 +1,4 @@
 class Phase < ApplicationRecord
-
   belongs_to :parent, class_name: "Phase", optional: true
   has_many :sub_phases, class_name: "Phase", foreign_key: "parent_id", dependent: :destroy
 
@@ -20,5 +19,4 @@ class Phase < ApplicationRecord
       errors.add(parent_id, "phase is already a sub-phase, only one level of sub phases allowed.")
     end
   end
-
 end

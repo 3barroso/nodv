@@ -3,9 +3,9 @@ class Author < ApplicationRecord
   has_many :resources, dependent: :destroy
   has_many :published_resources, -> { published }, class_name: "Resource"
 
-  validates :pen_name, presence: true, uniqueness: { scope: :user_id, 
+  validates :pen_name, presence: true, uniqueness: { scope: :user_id,
     message: "you already have an author profile with this name" }
-  
+
   after_save :ensure_single_primary, if: :became_primary?
 
   def user_email
@@ -22,7 +22,7 @@ class Author < ApplicationRecord
   end
 
   private
-  
+
     def became_primary?
       primary? && saved_change_to_primary?
     end

@@ -1,5 +1,5 @@
 class Admin::PhasesController < Admin::BaseController
-  before_action :require_admin, except: [:index]
+  before_action :require_admin, except: [ :index ]
 
   def new
   end

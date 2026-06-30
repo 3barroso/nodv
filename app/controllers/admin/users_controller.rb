@@ -1,7 +1,7 @@
 class Admin::UsersController < Admin::BaseController
-  before_action :require_admin, only: [:create, :destroy, :index, :new]
-  before_action :set_user, only: [:edit, :update, :show, :destroy]
-  before_action :authorize_profile_access, only: [:edit, :update, :show]
+  before_action :require_admin, only: [ :create, :destroy, :index, :new ]
+  before_action :set_user, only: [ :edit, :update, :show, :destroy ]
+  before_action :authorize_profile_access, only: [ :edit, :update, :show ]
 
   def create
   end
@@ -24,7 +24,7 @@ class Admin::UsersController < Admin::BaseController
   def new
     @user = User.new
   end
-  
+
   def update
     if @user.update(user_params)
       redirect_to admin_user_path(@user), notice: "Profile updated successfully."
@@ -50,6 +50,6 @@ class Admin::UsersController < Admin::BaseController
     end
 
     def user_params
-      params.require(:user).permit(:email_address, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation)
     end
 end

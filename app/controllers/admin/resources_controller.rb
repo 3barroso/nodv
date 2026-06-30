@@ -1,6 +1,6 @@
 class Admin::ResourcesController < Admin::BaseController
-  before_action :set_resource, only: [:edit, :destroy]
-  before_action :ensure_resource_access, only: [:edit, :destroy]
+  before_action :set_resource, only: [ :edit, :destroy ]
+  before_action :ensure_resource_access, only: [ :edit, :destroy ]
 
   def create
   end

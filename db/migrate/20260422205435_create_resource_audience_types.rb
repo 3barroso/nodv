@@ -7,6 +7,6 @@ class CreateResourceAudienceTypes < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :resource_audience_types, [:resource_id, :audience_type_id], unique: true, name: 'idx_resource_audience_unique'
+    add_index :resource_audience_types, [ :resource_id, :audience_type_id ], unique: true, name: 'idx_resource_audience_unique'
   end
 end
