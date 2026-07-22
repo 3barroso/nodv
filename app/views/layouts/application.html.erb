@@ -47,7 +47,10 @@
         <%= link_to "Resources", admin_resources_path %>
         <%= link_to "Phases", admin_phases_path %>
         <%= link_to "Profile", admin_user_path(current_user.id) %>
-        <%= link_to "Log Out", session_path, method: :delete %>
+        <%= link_to "Log Out", session_path, method: :delete, data: { turbo_method: :delete }  %>
+      <% else %>
+          <%= link_to "Login", new_session_path %>
+          <%= link_to "Create Account", new_user_path %>
       <% end %>
     </nav>
 

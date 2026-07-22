@@ -1,5 +1,5 @@
 class Admin::PhasesController < Admin::BaseController
-  before_action :require_admin, except: [ :index ]
+  before_action :require_admin
 
   def new
   end
@@ -8,10 +8,6 @@ class Admin::PhasesController < Admin::BaseController
   end
 
   def create
-  end
-
-  def index
-    @phases = Phase.all.includes(:resources)
   end
 
   def destroy

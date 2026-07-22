@@ -20,8 +20,10 @@ Rails.application.routes.draw do
 
   resources :authors, only: [ :show ]
 
+  resources :users, only: [ :new, :create ]
+
   namespace :admin do
-    resources :phases, only: [ :create, :destroy, :edit, :index, :new, :update ]
+    resources :phases, only: [ :create, :destroy, :edit, :new, :update ]
     resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ]
     resources :users
     resources :authors
