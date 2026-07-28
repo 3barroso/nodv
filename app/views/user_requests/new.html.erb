@@ -1,47 +1,5 @@
-<h1>Request access</h1>
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">Request access</h1>
 
-# reuse this form to be in the owner_edit template as well
-<%= form_with model: @user_request, url: user_requests_path, local: true, html: { multipart: true } do |form| %>
-  <% if @user_request.errors.any? %>
-    <div>
-      <h2><%= pluralize(@user_request.errors.count, "error") %> prevented this request from being saved:</h2>
-      <ul>
-        <% @user_request.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div>
-    <%= form.label :email %>
-    <%= form.email_field :email, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :purpose %>
-    <%= form.text_area :purpose, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :reason %>
-    <%= form.text_area :reason, required: true %>
-  </div>
-
-  <div>
-    <%= form.label :document, "Upload document" %>
-    <%= form.file_field :document %>
-  </div>
-
-  <%= form.submit "Submit request" %>
-<% end %>
+  <%= render 'user_requests/form', form_model: @user_request, submit_label: 'Submit request', show_credentials: true %>
+</div>

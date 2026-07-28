@@ -17,6 +17,7 @@ class Admin::UserRequestsController < Admin::BaseController
     @pending_user_requests = UserRequest.pending.order(created_at: :desc).limit(50)
     @total_user_requests_count = UserRequest.count
     @approved_requests_count = UserRequest.where(approved: true).count
+    # should the .count be .size ? for performance ?(but then fails spec tests)
   end
 
   def destroy
@@ -40,7 +41,6 @@ class Admin::UserRequestsController < Admin::BaseController
     end
   end
 
-  # ensure access method needed (user is admin or User.email == user_request.email)
   def show
   end
 

@@ -8,11 +8,14 @@ class UserRequestsController < ApplicationController
   def create
     @user_request = UserRequest.new(user_request_params)
 
-    # make user creation logic in helper so it can be called anywhere
-    @user = User.new(user_params)
-
     if @user_request.save
-      redirect_to new_user_path, notice: "Your request has been submitted."
+      user = create_user_from_request
+      if user.persisted?
+        start_new_session_for(user)
+        redirect_to root_path, notice: "Your request has been submitted. You are now signed in."
+      else
+        redirect_to new_session_path, alert: "Your request was saved, but we could not create your account."
+      end
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,8 +27,16 @@ class UserRequestsController < ApplicationController
     end
 
     def user_params
-      params.require(:user_request).permit(:email)
-      # add in @user_request.id ? (or tie with user request object through email after creation?)
-      # include password creation on user_request ? (yes)
+      params.require(:user_request).permit(:password, :password_confirmation)
+    end
+
+    def create_user_from_request
+      user = User.new(email: @user_request.email, password: user_params[:password], password_confirmation: user_params[:password_confirmation])
+      user.save!
+      @user_request.update!(created_user: user)
+      user
+    rescue ActiveRecord::RecordInvalid => e
+      Rails.logger.error("Failed to create user for request #{@user_request.id}: #{e.message}")
+      user
     end
 end

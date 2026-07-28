@@ -1,0 +1,18 @@
+<h1>Request access</h1>
+
+<%= form_with model: @user_request, url: users_path, local: true, html: { multipart: true } do |f| %>
+  <% if @user_request.errors.any? %>
+    <div>
+      <h2><%= pluralize(@user_request.errors.count, "error") %> prevented this request from being saved:</h2>
+      <ul>
+        <% @user_request.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render 'user_requests/fields', f: f %>
+
+  <%= f.submit "Submit request" %>
+<% end %>
