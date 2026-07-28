@@ -50,7 +50,7 @@
         <%= link_to "Log Out", session_path, method: :delete, data: { turbo_method: :delete }  %>
       <% else %>
           <%= link_to "Login", new_session_path %>
-          <%= link_to "Create Account", new_user_path %>
+          <%= link_to "Create Account", new_user_request_path %>
       <% end %>
     </nav>
 

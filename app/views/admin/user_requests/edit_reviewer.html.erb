@@ -1,0 +1,29 @@
+<h1>Review user request</h1>
+
+<%= form_with(model: [:admin, @user_request], local: true) do |f| %>
+  <div>
+    <%= f.label :approved %>
+    <%= f.check_box :approved %>
+  </div>
+
+  <div>
+    <%= f.label :rejection_reason %>
+    <%= f.text_area :rejection_reason %>
+  </div>
+
+  <% if @user_request.respond_to?(:reviewed) %>
+    <div>
+      <%= f.label :reviewed, "Reviewed" %>
+      <%= f.check_box :reviewed %>
+    </div>
+  <% elsif @user_request.respond_to?(:reviewed_by_id) %>
+    <div>
+      <%= f.label :reviewed_by_id %>
+      <%= f.text_field :reviewed_by_id %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.submit "Save" %>
+  </div>
+<% end %>

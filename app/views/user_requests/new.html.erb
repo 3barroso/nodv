@@ -1,6 +1,7 @@
 <h1>Request access</h1>
 
-<%= form_with model: @user_request, url: users_path, local: true, html: { multipart: true } do |form| %>
+# reuse this form to be in the owner_edit template as well
+<%= form_with model: @user_request, url: user_requests_path, local: true, html: { multipart: true } do |form| %>
   <% if @user_request.errors.any? %>
     <div>
       <h2><%= pluralize(@user_request.errors.count, "error") %> prevented this request from being saved:</h2>

@@ -15,17 +15,17 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
 
   resources :phases, only: [ :index, :show ]
-
   resources :resources, only: [ :index, :show ]
-
+  
   resources :authors, only: [ :show ]
-
-  resources :users, only: [ :new, :create ]
+  resources :user_requests, only: [ :new, :create ]
 
   namespace :admin do
     resources :phases, only: [ :create, :destroy, :edit, :new, :update ]
     resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ]
-    resources :users
+    
     resources :authors
+    resources :users
+    resources :user_requests, only: [ :destroy, :edit, :index, :update, :show ]
   end
 end

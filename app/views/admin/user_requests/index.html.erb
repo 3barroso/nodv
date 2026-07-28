@@ -1,0 +1,19 @@
+<h1>User requests </h1>
+<section>
+	<h2>Summary</h2>
+	<p>Total requests: <%= @total_user_requests_count %></p>
+	<p>Approved requests: <%= @approved_requests_count %></p>
+	<p>Pending (unreviewed): <%= @pending_user_requests.count %></p>
+</section>
+
+<section>
+	<h2>Pending requests</h2>
+	<ul>
+		<% @pending_user_requests.each do |req| %>
+			<li>
+				<strong><%= req.email %></strong> — <%= req.first_name %> <%= req.last_name %>
+				(<%= link_to "Review", admin_user_request_path(req) %>)
+			</li>
+		<% end %>
+	</ul>
+</section>

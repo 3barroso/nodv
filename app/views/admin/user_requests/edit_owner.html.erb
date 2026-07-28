@@ -1,0 +1,37 @@
+<h1>Edit your request</h1>
+
+<%= form_with(model: [:admin, @user_request], local: true, html: { multipart: true }) do |f| %>
+  <div>
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+
+  <div>
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+
+  <div>
+    <%= f.label :purpose %>
+    <%= f.text_area :purpose %>
+  </div>
+
+  <div>
+    <%= f.label :reason %>
+    <%= f.text_area :reason %>
+  </div>
+
+  <div>
+    <%= f.label :document, "Upload document" %>
+    <%= f.file_field :document %>
+  </div>
+
+  <div>
+    <label>Email</label>
+    <div><%= @user_request.email %></div>
+  </div>
+
+  <div>
+    <%= f.submit "Save" %>
+  </div>
+<% end %>
