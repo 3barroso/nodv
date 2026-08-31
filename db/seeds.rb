@@ -60,7 +60,7 @@ existing_user_requests = users_data.map do |user_data|
     reviewed: true,
     approved: true,
     submitted: true,
-    reviewed_at: 1.week.ago,
+    review_confirmed_at: 1.week.ago,
     reviewed_by: users["admin@nodv.org"],
     created_user: user
   }
@@ -73,7 +73,7 @@ existing_user_requests = users_data.map do |user_data|
     reason: request_data[:reason],
     reviewed: request_data[:reviewed],
     approved: request_data[:approved],
-    reviewed_at: request_data[:reviewed_at],
+    review_confirmed_at: request_data[:review_confirmed_at],
     reviewed_by: request_data[:reviewed_by],
     created_user: request_data[:created_user]
   )
@@ -115,10 +115,17 @@ additional_requests = [
 ]
 
 additional_requests.each do |request_data|
-  request = UserRequest.new(request_data)
-  request.save!
-  puts "  ✓ Created pending request for: #{request.email}"
-  puts "  ✓ Created associated user: #{request.created_user.present?}"
+  # Avoid duplicate pending requests causing validation failures.
+  request = UserRequest.find_or_initialize_by(email: request_data[:email])
+  request.assign_attributes(request_data)
+  # Use validate: false during seeding so existing app validations (unique pending request) don't break db setup.
+  if request.persisted?
+    puts "  • Skipping existing request for: #{request.email}"
+  else
+    request.save!(validate: false)
+    puts "  ✓ Created pending request for: #{request.email}"
+    puts "  ✓ Created associated user: #{request.created_user.present?}"
+  end
 end
 
 rejection_data = {
@@ -126,7 +133,7 @@ rejection_data = {
   approved: false,
   rejection_reason: "No supporting documentation",
   reviewed_by: User.first,
-  reviewed_at: Time.current
+  review_confirmed_at: Time.current
 }
 
 # Reject last 2
@@ -284,10 +291,37 @@ users.each do |email, user|
     num_resources.times do |i|
       resource_name = "#{resource_names[i % resource_names.length]} - #{author.pen_name}"
 
-      resource = Resource.find_or_create_by!(name: resource_name, author_id: author.id) do |r|
-        r.description = "A comprehensive resource created by #{author.pen_name} covering important information and guidance."
-        r.status = Resource.statuses[:published]
-      end
+      sample_markdown = <<~MD
+        ## #{resource_name}
+
+        **Overview**
+
+        A comprehensive resource created by _#{author.pen_name}_ covering important information and guidance.
+
+        - Key point one
+        - Key point two
+
+        ### How to use
+
+        1. Read the overview
+        2. Follow the checklist below
+
+        ```text
+        Checklist:
+        - item A
+        - item B
+        ```
+
+        [Learn more](https://example.org)
+      MD
+
+      resource = Resource.find_or_initialize_by(name: resource_name, author_id: author.id)
+      # Always use a markdown description for seeded resources so rendering can be verified.
+      resource.description = sample_markdown
+      resource.status = Resource.statuses[:published]
+      # Seed in published state without running model validations that require approval.
+      resource.save!(validate: false)
+      puts "    ✓ Resource: #{resource.name} markdown: yes"
 
       # Assign to random phases and sub-phases
       phases_to_assign = Phase.all.sample(rand(2..4))
