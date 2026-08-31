@@ -21,7 +21,7 @@ class Phase < ApplicationRecord
 
   def prevent_deep_nesting
     if parent.present? && parent.parent.present?
-      errors.add(parent_id, "phase is already a sub-phase, only one level of sub phases allowed.")
+      errors.add(:parent_id, "phase is already a sub-phase; only one level of sub-phases allowed.")
     end
   end
 end
