@@ -83,8 +83,14 @@
         .then(html => {
           const parser = new DOMParser();
           const doc = parser.parseFromString(html, 'text/html');
-          const phaseContent = doc.querySelector('main');
-          
+
+          // Try several selectors to find the phase content. Some views render inside <main>,
+          // others render a centered container. Fall back to the whole body if necessary.
+          const phaseContent = doc.querySelector('main')
+            || doc.querySelector('.mx-auto.max-w-5xl')
+            || doc.querySelector('.mx-auto')
+            || doc.body;
+
           detailPanel.innerHTML = phaseContent ? phaseContent.innerHTML : '<p>No details available</p>';
         })
         .catch(error => {

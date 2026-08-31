@@ -21,7 +21,12 @@ Rails.application.routes.draw do
   resources :user_requests, only: [ :new, :create ]
 
   namespace :admin do
-    resources :phases, only: [ :create, :destroy, :edit, :new, :update ]
+    resources :phases, only: [ :index, :create, :destroy, :edit, :new, :update ] do
+      member do
+        patch :move_up
+        patch :move_down
+      end
+    end
     resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ]
     
     resources :authors
