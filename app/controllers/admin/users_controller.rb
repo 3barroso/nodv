@@ -13,6 +13,20 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def index
+    @total_users = User.count
+    @total_authors = Author.count
+    @total_resources = Resource.count
+    @avg_resources_per_user = @total_users.positive? ? (@total_resources.to_f / @total_users).round(2) : 0
+
+    # Simple pagination
+    per_page = 20
+    page = params[:page].to_i > 0 ? params[:page].to_i : 1
+    offset = (page - 1) * per_page
+
+    # Load users with their authors and resources to avoid N+1 queries
+    @users = User.includes(authors: :resources).order(created_at: :desc).offset(offset).limit(per_page)
+    @page = page
+    @per_page = per_page
   end
 
   def show

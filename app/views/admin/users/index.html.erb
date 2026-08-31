@@ -1,2 +1,65 @@
-<h1>Users</h2>
-<p>showing all users</p>
+<h1 class="text-4xl font-bold text-slate-900 mb-6">Users</h1>
+
+<section class="mb-8">
+	<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+		<div class="bg-white shadow rounded-lg p-6 text-center">
+			<div class="text-3xl font-semibold text-slate-900"><%= @total_users %></div>
+			<div class="text-sm text-slate-500">Total users</div>
+		</div>
+
+		<div class="bg-white shadow rounded-lg p-6 text-center">
+			<div class="text-3xl font-semibold text-slate-900"><%= @total_authors %></div>
+			<div class="text-sm text-slate-500">Authors</div>
+		</div>
+
+		<div class="bg-white shadow rounded-lg p-6 text-center">
+			<div class="text-3xl font-semibold text-slate-900"><%= @avg_resources_per_user %></div>
+			<div class="text-sm text-slate-500">Avg resources per user</div>
+		</div>
+	</div>
+</section>
+
+<section>
+	<h2 class="text-2xl font-semibold text-slate-900 mb-4">Users</h2>
+
+	<% if @users.any? %>
+		<ul class="divide-y divide-slate-100 bg-white rounded-lg shadow-sm overflow-hidden">
+			<% @users.each do |user| %>
+				<li class="px-6 py-4 flex items-start justify-between">
+					<div>
+						<div class="text-sm font-medium text-slate-900"> <%= link_to "#{user.email.present? ? user.email.split('@').first.titleize : user.email}", admin_user_path(user) %> </div>
+						<div class="text-sm text-slate-500 mt-1">Authors: <%= user.authors.size %></div>
+						<% if user.authors.any? %>
+							<div class="mt-2 text-sm text-slate-700">
+								<% user.authors.each do |author| %>
+									<div class="flex items-center gap-3">
+										<div class="font-medium"><%= author.pen_name %></div>
+										<div class="text-sm text-slate-500">Resources: <%= author.resources.size %></div>
+									</div>
+								<% end %>
+							</div>
+						<% end %>
+					</div>
+
+					<div class="text-right text-sm text-slate-500">
+						<div>Joined: <%= user.created_at.strftime("%b %-d, %Y") %></div>
+					</div>
+				</li>
+			<% end %>
+		</ul>
+
+		<div class="mt-6 flex justify-between items-center">
+			<div class="text-sm text-slate-500">Page <%= @page %></div>
+			<div class="space-x-2">
+				<% if @page > 1 %>
+					<%= link_to "Previous", admin_users_path(page: @page - 1), class: "px-3 py-2 bg-white border rounded text-sm text-slate-700" %>
+				<% end %>
+				<% if @users.size == @per_page %>
+					<%= link_to "Next", admin_users_path(page: @page + 1), class: "px-3 py-2 bg-white border rounded text-sm text-slate-700" %>
+				<% end %>
+			</div>
+		</div>
+	<% else %>
+		<p class="text-slate-500">No users found.</p>
+	<% end %>
+</section>
