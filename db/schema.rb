@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
+ActiveRecord::Schema[8.1].define(version: 2026_08_31_150300) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -119,13 +119,14 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_22_030000) do
     t.text "purpose"
     t.text "reason"
     t.text "rejection_reason"
+    t.datetime "review_confirmed_at"
     t.boolean "reviewed", default: false, null: false
-    t.datetime "reviewed_at"
     t.bigint "reviewed_by_id"
+    t.boolean "submitted", default: false
     t.datetime "updated_at", null: false
     t.index ["created_user_id"], name: "index_user_requests_on_created_user_id"
     t.index ["email"], name: "index_user_requests_on_email"
-    t.index ["email"], name: "index_user_requests_on_unreviewed_email", unique: true, where: "(reviewed = false)"
+    t.index ["email"], name: "index_user_requests_on_pending_submitted_email", unique: true, where: "((reviewed = false) AND (submitted = true))"
     t.index ["reviewed", "created_at"], name: "index_user_requests_on_reviewed_and_created_at"
     t.index ["reviewed_by_id"], name: "index_user_requests_on_reviewed_by_id"
   end

@@ -42,6 +42,7 @@ RSpec.describe UserRequest, type: :model do
         reason: 'Already requested',
         reviewed: false,
         approved: false,
+        submitted: true,
         password: 'password123',
         password_confirmation: 'password123'
       )

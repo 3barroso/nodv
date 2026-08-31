@@ -2,17 +2,48 @@ class UserRequestsController < ApplicationController
   allow_unauthenticated_access only: [ :new, :create ]
 
   def new
-    @user_request = UserRequest.new
+    if current_user
+      latest_request = current_user.user_requests.order(created_at: :desc).first
+
+      if latest_request.nil?
+        @user_request = UserRequest.new
+        return
+      end
+
+      if latest_request.draft?
+        @user_request = latest_request
+        return
+      end
+
+      # If latest was submitted and rejected, create a new draft copy
+      if latest_request.submitted? && latest_request.rejected?
+        @user_request = latest_request.remake_rejected_request
+        return
+      end
+
+      # Otherwise show the existing request status to the user
+      redirect_to admin_user_request_path(latest_request) and return
+    else
+      @user_request = UserRequest.new
+    end
   end
 
   def create
-    if UserRequest.exists?(email: user_request_params[:email]) && (!current_user || current_user.email != user_request_params[:email])
-      redirect_to new_user_request_path, alert: "Account already exists for this email, please sign in to create new request" and return
+    email = user_request_params[:email]
+
+    # If an account already exists for this email and the requester is not
+    # signed in as that user, redirect to the sign-in page with a neutral notice so we don't reveal account existence.
+    if User.exists?(email: email) && (!current_user || current_user.email != email)
+      redirect_to new_session_path, notice: "System is processing your request. Please sign in or reset your password." and return
+    end
+
+    # If there's already a pending submitted request for this email and the requester is not the signed-in owner, redirect to sign-in with a neutral notice.
+    if UserRequest.pending.where(email: email, submitted: true).exists? && (!current_user || current_user.email != email)
+      redirect_to new_session_path, notice: "System is processing your request. Please sign in to check status." and return
     end
 
     @user_request = UserRequest.new(user_request_params)
 
-    # before save insure email is unique or that the user creating a new request is signed in as that user's email
     if @user_request.save
       if @user_request.created_user.present?
         start_new_session_for(@user_request.created_user)

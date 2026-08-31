@@ -29,5 +29,30 @@ RSpec.describe UserRequestsController, type: :controller do
       expect(response).to redirect_to(root_path)
       expect(controller).to have_received(:start_new_session_for).with(user)
     end
+
+    it 'redirects unauthenticated existing user to login with neutral notice' do
+      # simulate no current_user
+      allow(controller).to receive(:current_user).and_return(nil)
+
+      # ensure user exists in DB
+      user
+
+      expect do
+        post :create, params: {
+          user_request: {
+            email: email,
+            password: 'password123',
+            password_confirmation: 'password123',
+            first_name: 'Anon',
+            last_name: 'Visitor',
+            purpose: 'Access',
+            reason: 'I need access'
+          }
+        }
+      end.not_to change(UserRequest, :count)
+
+      expect(response).to redirect_to(new_session_path)
+      expect(flash[:notice]).to match(/System is processing your request/)
+    end
   end
 end
