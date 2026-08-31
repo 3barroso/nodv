@@ -8,6 +8,16 @@ class User < ApplicationRecord
 
   # Returns true if this user has at least one submitted user request that was approved.
   def approved_user_request?
-    user_requests.where(approved: true).exists?
+    user_requests.where(submitted: true, approved: true).exists?
   end
+
+  after_create :create_default_author
+
+  private
+
+    def create_default_author
+      return if authors.exists?
+      
+      authors.create(pen_name: "Default Author")
+    end
 end

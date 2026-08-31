@@ -10,7 +10,8 @@ RSpec.describe Admin::UsersController, type: :controller do
     end
 
     it 'assigns author and resource counts for the user profile' do
-      author = create(:author, user: user, pen_name: 'Author One')
+      author = user.authors.first
+      author.update!(pen_name: 'Author One') if author.pen_name.blank?
       create(:resource, author: author, name: 'First Resource', status: :published)
       create(:resource, author: author, name: 'Second Resource', status: :draft)
 

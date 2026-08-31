@@ -4,7 +4,7 @@ RSpec.describe Resource, type: :model do
   describe 'publishing validation' do
     it 'is invalid to publish when the author\'s user is not approved' do
       user = create(:user)
-      author = create(:author, user: user)
+      author = user.authors.first
 
       resource = build(:resource, author: author, status: :draft)
       resource.status = :published

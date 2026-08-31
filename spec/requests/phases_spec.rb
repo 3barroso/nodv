@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Phases', type: :request do
   let!(:parent_phase) { create(:phase, name: 'Foundation Phase', description: 'Main learning stage') }
   let!(:sub_phase) { create(:phase, name: 'Sub Phase One', parent: parent_phase, description: 'A child phase') }
-  let!(:author) { create(:author, pen_name: 'Ada', user: create(:user, email: 'ada@example.com')) }
+  let!(:author) { create(:user, email: 'ada@example.com').authors.first }
   let!(:parent_resource) { create(:resource, name: 'Parent Resource', author: author) }
   let!(:sub_resource) { create(:resource, name: 'Child Resource', author: author) }
 
