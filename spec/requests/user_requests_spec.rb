@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'User requests', type: :request do
   it 'creates a user request with the required fields' do
     expect do
-      post users_path, params: {
+      post user_requests_path, params: {
         user_request: {
           email: 'applicant@example.com',
           first_name: 'Ada',

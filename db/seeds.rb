@@ -44,7 +44,103 @@ users_data.each do |user_data|
 end
 
 # ==============================================================================
-# PHASES AND SUB-PHASES
+# USER REQUESTS
+# ==============================================================================
+
+puts "~~~~~~ Creating Seeded User Requests ~~~~~~"
+
+existing_user_requests = users_data.map do |user_data|
+  user = users[user_data[:email]]
+  request_data = {
+    email: user_data[:email],
+    first_name: user_data[:authors].first.split.first,
+    last_name: user_data[:authors].first.split.last || "User",
+    purpose: "Seeded access request for #{user_data[:email]}",
+    reason: "Approved during initial database seeding.",
+    reviewed: true,
+    approved: true,
+    reviewed_at: 1.week.ago,
+    reviewed_by: users["admin@nodv.org"],
+    created_user: user
+  }
+
+  request = UserRequest.find_or_initialize_by(email: request_data[:email])
+  request.assign_attributes(
+    first_name: request_data[:first_name],
+    last_name: request_data[:last_name],
+    purpose: request_data[:purpose],
+    reason: request_data[:reason],
+    reviewed: request_data[:reviewed],
+    approved: request_data[:approved],
+    reviewed_at: request_data[:reviewed_at],
+    reviewed_by: request_data[:reviewed_by],
+    created_user: request_data[:created_user]
+  )
+  request.save!(validate: false)
+  request
+end
+
+additional_requests = [
+  {
+    email: "niara@example.com",
+    password: "password123",
+    password_confirmation: "password123",
+    first_name: "Niara",
+    last_name: "Lopez",
+    purpose: "Access the resource library",
+    reason: "I need to review materials for my case load."
+  },
+  {
+    email: "omar@example.com",
+    password: "password123",
+    password_confirmation: "password123",
+    first_name: "Omar",
+    last_name: "Singh",
+    purpose: "Submit and manage resources",
+    reason: "I will coordinate support plans for families."
+  },
+  {
+    email: "talia@example.com",
+    password: "password123",
+    password_confirmation: "password123",
+    first_name: "Talia",
+    last_name: "Brooks",
+    purpose: "Review and contribute content",
+    reason: "I need to help prepare educational resources."
+  }
+]
+
+additional_requests.each do |request_data|
+  request = UserRequest.new(request_data)
+  request.save!
+  puts "  ✓ Created pending request for: #{request.email}"
+  puts "  ✓ Created associated user: #{request.created_user.present?}"
+end
+
+rejection_data = {
+  reviewed: true,
+  approved: false,
+  rejection_reason: "No supporting documentation",
+  reviewed_by: User.first,
+  reviewed_at: Time.current
+}
+
+# Reject last 2
+UserRequest.last(2).each do |request|
+  request.update!(rejection_data)
+end
+
+last_request = UserRequest.last
+retry_request = UserRequest.new(
+  email: last_request.created_user.email,
+  first_name: last_request.first_name,
+  last_name: last_request.last_name,
+  purpose: "Help families",
+  reason: "I have a deep knowledge and experience of family support."
+)
+retry_request.save!
+
+# ==============================================================================
 # ==============================================================================
 
 puts "~~~~~~ Creating Phases and Sub-Phases ~~~~~~"
@@ -215,6 +311,7 @@ end
 puts "\n~~~~~~ Seed Data Summary ~~~~~~"
 puts "✓ Users: #{User.count}"
 puts "✓ Authors: #{Author.count}"
+puts "✓ User Requests: #{UserRequest.count}"
 puts "✓ Phases: #{Phase.where(parent_id: nil).count} top-level, #{Phase.where.not(parent_id: nil).count} sub-phases"
 puts "✓ Resources: #{Resource.count}"
 puts "✓ Phase Resources: #{PhaseResource.count}"
