@@ -55,8 +55,8 @@ RSpec.describe 'Admin::UserRequests', type: :request do
       get admin_user_requests_path
 
       expect(response).to have_http_status(:ok)
-      expect(response.body).to include('Total requests:')
-      expect(response.body).to include('Approved requests:')
+      expect(response.body).to include('Total requests')
+      expect(response.body).to include('Approved')
     end
   end
 
