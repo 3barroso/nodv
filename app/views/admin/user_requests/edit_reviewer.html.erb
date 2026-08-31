@@ -1,29 +1,38 @@
-<h1>Review user request</h1>
+<div class="mx-auto md:w-2/3 w-full bg-white rounded-lg shadow p-6">
+  <h1 class="text-2xl font-semibold text-slate-900 mb-4">Review user request</h1>
 
-<%= form_with(model: [:admin, @user_request], local: true) do |f| %>
-  <div>
-    <%= f.label :approved %>
-    <%= f.check_box :approved %>
-  </div>
+  <%= render 'details', user_request: @user_request %>
 
-  <div>
-    <%= f.label :rejection_reason %>
-    <%= f.text_area :rejection_reason %>
-  </div>
+  <%= form_with(model: [:admin, @user_request], local: true) do |f| %>
+    <div class="space-y-4">
+      <div class="flex items-start gap-3">
+        <%= f.check_box :approved, class: "mt-1" %>
+        <div>
+          <%= f.label :approved, class: "block text-sm font-medium text-slate-700" %>
+          <p class="text-sm text-slate-500">Mark this request as approved.</p>
+        </div>
+      </div>
 
-  <% if @user_request.respond_to?(:reviewed) %>
-    <div>
-      <%= f.label :reviewed, "Reviewed" %>
-      <%= f.check_box :reviewed %>
-    </div>
-  <% elsif @user_request.respond_to?(:reviewed_by_id) %>
-    <div>
-      <%= f.label :reviewed_by_id %>
-      <%= f.text_field :reviewed_by_id %>
+      <div>
+        <%= f.label :rejection_reason, class: "block text-sm font-medium text-slate-700" %>
+        <%= f.text_area :rejection_reason, rows: 4, class: "mt-1 block w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+      </div>
+
+      <% if @user_request.respond_to?(:reviewed) || @user_request.respond_to?(:reviewed_by_id) %>
+        <div class="flex items-center gap-3">
+          <% if @user_request.respond_to?(:reviewed) %>
+            <%= f.check_box :reviewed, class: "mt-1" %>
+            <%= f.label :reviewed, "Reviewed", class: "block text-sm font-medium text-slate-700" %>
+          <% else %>
+            <%= f.label :reviewed_by_id, class: "block text-sm font-medium text-slate-700" %>
+            <%= f.text_field :reviewed_by_id, class: "mt-1 block w-32 rounded-md border border-slate-200 px-2 py-1" %>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="pt-4">
+        <%= f.submit "Save review", class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      </div>
     </div>
   <% end %>
-
-  <div>
-    <%= f.submit "Save" %>
-  </div>
-<% end %>
+</div>

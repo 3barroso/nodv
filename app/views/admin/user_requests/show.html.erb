@@ -1,15 +1,24 @@
-<h1>User request</h1>
+<div class="flex items-start justify-between mb-6">
+  <h1 class="text-4xl font-bold text-slate-900"> <%= "#{@user_request.first_name} #{@user_request.last_name} - User request" %></h1>
 
-<p><strong>Email:</strong> <%= @user_request.email %></p>
-<p><strong>Name:</strong> <%= @user_request.first_name %> <%= @user_request.last_name %></p>
-<p><strong>Purpose:</strong> <%= @user_request.purpose %></p>
-<p><strong>Reason:</strong> <%= @user_request.reason %></p>
-<p><strong>Submitted:</strong> <%= @user_request.submitted %></p>
-<p><strong>Reviewed:</strong> <%= @user_request.reviewed %></p>
-<p><strong>Approved:</strong> <%= @user_request.approved %></p>
+  <div class="bg-white rounded-lg shadow p-4 text-right">
+    <div class="text-sm text-slate-500">Status</div>
+    <div class="mt-2 text-base font-semibold text-slate-900">
+      <span class="mr-2">Submitted: <%= @user_request.submitted? ? "Yes" : "No" %></span>
+      <span class="mr-2">Approved: <%= @user_request.approved? ? "Yes" : "No" %></span>
+      <span class="mr-2">Reviewed: <%= @user_request.reviewed? ? "Yes" : "No" %></span>
+    </div>
+    <% if @user_request.rejection_reason.present? %>
+      <div class="mt-2 text-sm text-red-600">Rejection: <%= @user_request.rejection_reason %></div>
+    <% end %>
+    <div class="mt-4">
+      <% if current_user&.admin? %>
+        <%= link_to "Review", edit_admin_user_request_path(@user_request), class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      <% else %>
+        <%= link_to "Edit", edit_admin_user_request_path(@user_request), class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+      <% end %>
+    </div>
+  </div>
+</div>
 
-<% if current_user&.admin? %>
-  <%= link_to 'Edit (reviewer)', edit_admin_user_request_path(@user_request) %>
-<% elsif @user_request.email == (current_user&.email || session[:user]&.dig("email")) %>
-  <%= link_to 'Edit (owner)', edit_admin_user_request_path(@user_request) %>
-<% end %>
+<%= render 'details', user_request: @user_request %>

@@ -7,6 +7,10 @@ class Admin::UserRequestsController < Admin::BaseController
     if current_user&.admin?
       render :edit_reviewer
     elsif owner?
+      # Mark a submitted request as not submitted while the owner edits it
+      if @user_request.submitted?
+        @user_request.update(submitted: false)
+      end
       render :edit_owner
     else
       redirect_to root_path, alert: "Access denied."

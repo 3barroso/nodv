@@ -12,10 +12,10 @@ class UserRequest < ApplicationRecord
 
   validate :no_pending_requests, on: :create
 
-  scope :pending,  -> { where(reviewed: false) }
+  scope :pending,  -> { where(reviewed: false, submitted: true) }
   scope :reviewed, -> { where(reviewed: true) }
   scope :approved, -> { where(reviewed: true, approved: true) }
-  scope :rejected, -> { where(reviewed: true, approved: false) }
+  scope :rejected, -> { where(reviewed: true, approved: false, submitted: true) }
 
   # Convenience status helpers
   def draft?

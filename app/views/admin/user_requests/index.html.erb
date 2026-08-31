@@ -1,19 +1,72 @@
-<h1>User requests </h1>
-<section>
-	<h2>Summary</h2>
-	<p>Total requests: <%= @total_user_requests_count %></p>
-	<p>Approved requests: <%= @approved_requests_count %></p>
-	<p>Pending (unreviewed): <%= @pending_user_requests.count %></p>
+<h1 class="text-4xl font-bold text-slate-900 mb-6">User requests</h1>
+
+<section class="mb-8">
+	<div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+		<div class="bg-white shadow rounded-lg p-6 text-center">
+			<div class="text-3xl font-semibold text-slate-900"><%= @total_user_requests_count %></div>
+			<div class="text-sm text-slate-500">Total requests</div>
+		</div>
+
+		<div class="bg-white shadow rounded-lg p-6 text-center">
+			<div class="text-3xl font-semibold text-slate-900"><%= @approved_requests_count %></div>
+			<div class="text-sm text-slate-500">Approved</div>
+		</div>
+
+		<div class="bg-white shadow rounded-lg p-6 text-center">
+			<div class="text-3xl font-semibold text-slate-900"><%= @pending_user_requests.count %></div>
+			<div class="text-sm text-slate-500">Pending (not reviewed)</div>
+		</div>
+	</div>
 </section>
 
 <section>
-	<h2>Pending requests</h2>
-	<ul>
-		<% @pending_user_requests.each do |req| %>
-			<li>
-				<strong><%= req.email %></strong> — <%= req.first_name %> <%= req.last_name %>
-				(<%= link_to "Review", admin_user_request_path(req) %>)
-			</li>
-		<% end %>
-	</ul>
+	<h2 class="text-2xl font-semibold text-slate-900 mb-4">Pending requests</h2>
+	<% if @pending_user_requests.any? %>
+		<ul class="divide-y divide-slate-100 bg-white rounded-lg shadow-sm overflow-hidden">
+			<% @pending_user_requests.each do |req| %>
+				<% status = if req.approved?
+											:approved
+										elsif req.rejected?
+											:rejected
+										elsif req.submitted?
+											:submitted
+										else
+											:draft
+										end %>
+				<% status_class = case status
+													when :approved then "bg-green-100 text-green-800"
+													when :rejected then "bg-red-100 text-red-800"
+													when :submitted then "bg-yellow-100 text-yellow-800"
+													else "bg-gray-100 text-gray-700"
+													end %>
+
+				<li class="px-6 py-4 flex items-center justify-between">
+					<div class="flex items-center gap-4">
+						<span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium <%= status_class %>">
+							<%# Human readable status %>
+							<%= case status
+									when :approved then 'Approved'
+									when :rejected then 'Rejected'
+									when :submitted then 'Submitted'
+									else 'Draft'
+									end %>
+						</span>
+
+						<div>
+							<div class="text-sm font-medium text-slate-900"> <%= link_to "#{req.first_name} #{req.last_name}", admin_user_path(req.created_user_id) %> — <%= req.email %></div>
+							<div class="text-sm text-slate-500 mt-1">Purpose: <%= req.purpose %></div>
+						</div>
+					</div>
+
+					<div class="text-right text-sm text-slate-500">
+						<div>Created: <%= req.created_at.strftime("%b %-d, %Y %H:%M") %></div>
+						<div>Updated: <%= req.updated_at.strftime("%b %-d, %Y %H:%M") %></div>
+						<div class="mt-2">(<%= link_to "View", admin_user_request_path(req), class: "text-indigo-600 hover:text-indigo-800" %>)</div>
+					</div>
+				</li>
+			<% end %>
+		</ul>
+	<% else %>
+		<p class="text-slate-500">No pending requests.</p>
+	<% end %>
 </section>

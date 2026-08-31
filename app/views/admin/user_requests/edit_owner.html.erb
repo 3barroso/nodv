@@ -1,5 +1,37 @@
-<div class="mx-auto md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">Edit your request</h1>
+<div class="mx-auto md:w-2/3 w-full bg-white rounded-lg shadow p-6">
+  <h1 class="text-2xl font-semibold text-slate-900 mb-4">Edit your request</h1>
+  <%= render 'details', user_request: @user_request %>
 
-  <%= render 'user_requests/form', form_model: [:admin, @user_request], submit_label: 'Save', show_credentials: false %>
+  <%= form_with model: [:admin, @user_request], local: true do |f| %>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <%= f.label :first_name, class: "block text-sm font-medium text-slate-700" %>
+        <%= f.text_field :first_name, class: "mt-1 block w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+      </div>
+
+      <div>
+        <%= f.label :last_name, class: "block text-sm font-medium text-slate-700" %>
+        <%= f.text_field :last_name, class: "mt-1 block w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :purpose, class: "block text-sm font-medium text-slate-700" %>
+      <%= f.text_field :purpose, class: "mt-1 block w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :reason, class: "block text-sm font-medium text-slate-700" %>
+      <%= f.text_area :reason, rows: 6, class: "mt-1 block w-full rounded-md border border-slate-200 px-3 py-2 focus:outline-none focus:ring-1 focus:ring-indigo-500" %>
+    </div>
+
+    <div class="mt-4">
+      <%= f.label :document, class: "block text-sm font-medium text-slate-700" %>
+      <%= f.file_field :document, class: "mt-1 block w-full text-sm text-slate-700" %>
+    </div>
+
+    <div class="mt-6">
+      <%= f.submit "Save changes", class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+    </div>
+  <% end %>
 </div>

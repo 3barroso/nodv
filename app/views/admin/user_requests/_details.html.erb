@@ -1,0 +1,19 @@
+<% user_request = local_assigns[:user_request] || @user_request %>
+
+<div class="bg-white rounded-lg shadow p-6 mb-6">
+  <h2 class="text-xl font-semibold text-slate-900 mb-2">Request details</h2>
+
+  <div class="grid grid-cols-1 gap-2 text-sm text-slate-700">
+    <div><strong>Name:</strong> <%= link_to "#{user_request.first_name} #{user_request.last_name}", admin_user_path(user_request.created_user_id) %></div>
+    <div><strong>Email:</strong> <%= user_request.email %></div>
+    <div><strong>Purpose:</strong> <%= user_request.purpose %></div>
+    <div><strong>Reason:</strong> <%= user_request.reason %></div>
+    <% if user_request.document&.attached? %>
+      <div><strong>Document:</strong> <%= link_to "Download", url_for(user_request.document) %></div>
+    <% end %>
+    <div class="text-sm text-slate-500 mt-2">
+      <div>Created: <%= user_request.created_at.strftime("%b %-d, %Y %H:%M") %></div>
+      <div>Updated: <%= user_request.updated_at.strftime("%b %-d, %Y %H:%M") %></div>
+    </div>
+  </div>
+</div>

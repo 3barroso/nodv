@@ -59,6 +59,7 @@ existing_user_requests = users_data.map do |user_data|
     reason: "Approved during initial database seeding.",
     reviewed: true,
     approved: true,
+    submitted: true,
     reviewed_at: 1.week.ago,
     reviewed_by: users["admin@nodv.org"],
     created_user: user
@@ -88,7 +89,8 @@ additional_requests = [
     first_name: "Niara",
     last_name: "Lopez",
     purpose: "Access the resource library",
-    reason: "I need to review materials for my case load."
+    reason: "I need to review materials for my case load.",
+    submitted: true
   },
   {
     email: "omar@example.com",
@@ -97,7 +99,8 @@ additional_requests = [
     first_name: "Omar",
     last_name: "Singh",
     purpose: "Submit and manage resources",
-    reason: "I will coordinate support plans for families."
+    reason: "I will coordinate support plans for families.",
+    submitted: true
   },
   {
     email: "talia@example.com",
@@ -106,7 +109,8 @@ additional_requests = [
     first_name: "Talia",
     last_name: "Brooks",
     purpose: "Review and contribute content",
-    reason: "I need to help prepare educational resources."
+    reason: "I need to help prepare educational resources.",
+    submitted: true
   }
 ]
 
