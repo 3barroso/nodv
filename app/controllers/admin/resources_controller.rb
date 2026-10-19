@@ -27,6 +27,14 @@ class Admin::ResourcesController < Admin::BaseController
   def new
   end
 
+  def preview
+    puts "params: #{params.inspect}" 
+    # Needed ? (want resource)
+    require "commonmarker"
+    @markdown = Commonmarker.to_html(params[:body])
+    render turbo_stream: turbo_stream.update("preview", @markdown)
+  end
+
   private
     def set_resource
       @resource = Resource.find(params[:id])

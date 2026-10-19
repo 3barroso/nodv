@@ -6,6 +6,15 @@
         <p class="mt-4 text-lg leading-8 text-gray-700"><%= @resource.description.presence || "No description available." %></p>
       </div>
 
+      # need resource ID so preview element can be targeted when editing?
+      <div>
+        <strong class="block font-medium mb-1">Markdown:</strong>
+        <div>
+          <%= @markdown %>
+        </div>
+      </div>
+
+
       <% if @resource.manageable_by?(current_user) %>
         <div class="flex-shrink-0">
           <%= link_to "Edit resource", edit_admin_resource_path(@resource), class: "inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700" %>

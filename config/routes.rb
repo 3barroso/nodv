@@ -27,7 +27,9 @@ Rails.application.routes.draw do
         patch :move_down
       end
     end
-    resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ]
+    resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ] do
+      post :preview, on: :collection
+    end
     
     resources :authors
     resources :users
