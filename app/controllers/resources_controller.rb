@@ -8,6 +8,6 @@ class ResourcesController < ApplicationController
   def show
     require 'commonmarker'
     @resource = Resource.includes(author: :user, phases: :phase_resources).find(params[:id])
-    @markdown = Commonmarker.to_html(@resource.description).html_safe
+    @markdown = Commonmarker.to_html(@resource.description.body.to_html)
   end
 end

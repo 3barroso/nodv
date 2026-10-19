@@ -44,7 +44,7 @@ gem "thruster", require: false
 
 gem "acts_as_list"
 gem "commonmarker"
-gem 'lexxy', '~> 0.9.21'
+gem "lexxy", ">= 1.0.1"
 gem "requestjs-rails"
 
 group :development, :test do

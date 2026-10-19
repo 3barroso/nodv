@@ -6,7 +6,7 @@ class Resource < ApplicationRecord
   has_many :resource_audience_types, dependent: :destroy
   has_many :audience_types, through: :resource_audience_types
 
-  # has_rich_text :description
+  has_rich_text :description
 
   enum :status, { draft: 0, published: 1, archived: 2 }, default: :draft
 
@@ -15,6 +15,15 @@ class Resource < ApplicationRecord
   def manageable_by?(user)
     return false if user.nil?
     user.admin? || author&.user_id == user.id
+  end
+
+  def markdown_content
+    return if self.description.blank?
+
+    Commonmarker.to_html(self.description.body.to_html, options: {
+      parse: { smart: true },
+      extension: { table: true, strikethrough: true }
+    })
   end
 
   private
