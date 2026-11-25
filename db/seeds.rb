@@ -317,7 +317,8 @@ users.each do |email, user|
 
       resource = Resource.find_or_initialize_by(name: resource_name, author_id: author.id)
       # Always use a markdown description for seeded resources so rendering can be verified.
-      resource.description = sample_markdown
+      rich_text_description = resource.rich_text_description || resource.build_rich_text_description
+      rich_text_description.body = sample_markdown
       resource.status = Resource.statuses[:published]
       # Seed in published state without running model validations that require approval.
       resource.save!(validate: false)

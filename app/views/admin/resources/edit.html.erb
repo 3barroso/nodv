@@ -3,7 +3,7 @@
     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
       <div>
         <h1 class="text-4xl font-bold text-slate-900">Edit resource</h1>
-        <p class="mt-2 text-sm text-gray-600">Update the resource details below. The description area is ready for richer markdown-based editing later.</p>
+        <p class="mt-2 text-sm text-gray-600">Update the resource details below. Use the description toolbar for rich formatting.</p>
       </div>
 
       <div class="flex flex-wrap gap-2">
@@ -33,8 +33,8 @@
 
       <div class="my-5" data-preview-target="editor">
         <%= form.label :description, class: "block text-sm font-medium text-slate-700", for: "admin_resource_description" %>
-        <%= form.lexxy_rich_text_area :description, id: "admin_resource_description", data: { preview_target: "editorContent", }, rows: 22, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
-        <p class="mt-2 text-sm text-gray-500">This field is set up as a large text area and can later be upgraded to markdown or rich text editing.</p>
+        <%= form.lexxy_rich_text_area :description, value: @resource.markdown_content, id: "admin_resource_description", data: { preview_target: "editorContent" }, rows: 22, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+        <p class="mt-2 text-sm text-gray-500">Use the toolbar or Markdown shortcuts to format the description.</p>
       </div>
 
       <div id="preview" data-preview-target="preview" class="my-5 p-4 border rounded-md bg-white prose max-w-full hidden"></div>

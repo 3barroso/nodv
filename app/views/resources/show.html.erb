@@ -3,17 +3,12 @@
     <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
       <div class="min-w-0">
         <h1 class="text-4xl font-bold text-slate-900"><%= @resource.name %></h1>
-        <p class="mt-4 text-lg leading-8 text-gray-700"><%= @resource.description.presence || "No description available." %></p>
+        <% if @markdown.present? %>
+          <div class="prose mt-4 max-w-none text-gray-700"><%= render_action_text_content(ActionText::Content.new(@markdown)) %></div>
+        <% else %>
+          <p class="mt-4 text-lg leading-8 text-gray-700">No description available.</p>
+        <% end %>
       </div>
-
-      # need resource ID so preview element can be targeted when editing?
-      <div>
-        <strong class="block font-medium mb-1">Markdown:</strong>
-        <div>
-          <%= @markdown %>
-        </div>
-      </div>
-
 
       <% if @resource.manageable_by?(current_user) %>
         <div class="flex-shrink-0">

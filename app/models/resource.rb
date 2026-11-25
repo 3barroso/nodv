@@ -20,7 +20,10 @@ class Resource < ApplicationRecord
   def markdown_content
     return if self.description.blank?
 
-    Commonmarker.to_html(self.description.body.to_html, options: {
+    body = self.description.body
+    return body.to_html unless body.to_html == body.to_plain_text
+
+    Commonmarker.to_html(body.to_plain_text, options: {
       parse: { smart: true },
       extension: { table: true, strikethrough: true }
     })

@@ -24,4 +24,21 @@ RSpec.describe Resource, type: :model do
       expect(resource).to be_valid
     end
   end
+
+  describe '#markdown_content' do
+    it 'renders the Action Text plain-text body as Markdown' do
+      resource = Resource.new
+      resource.description = "## Frequently asked questions\n\n**Important** details."
+
+      expect(resource.markdown_content).to include('<h2')
+      expect(resource.markdown_content).to include('<strong>Important</strong>')
+    end
+
+    it 'preserves formatting saved by the rich-text editor' do
+      resource = Resource.new
+      resource.description = '<p><strong>Important</strong> details.</p>'
+
+      expect(resource.markdown_content).to include('<strong>Important</strong>')
+    end
+  end
 end
