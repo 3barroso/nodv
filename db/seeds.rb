@@ -158,86 +158,86 @@ puts "~~~~~~ Creating Phases and Sub-Phases ~~~~~~"
 
 phase_data = [
   {
-    name: "Phase 1: Foundation",
+    name: "Foundation",
     description: "Building the foundational knowledge and skills",
     sub_phases: [
-      { name: "Sub-Phase 1.1: Introduction", description: "Getting started with basics" },
-      { name: "Sub-Phase 1.2: Core Concepts", description: "Understanding key principles" }
+      { name: "Introduction", description: "Getting started with basics" },
+      { name: "Core Concepts", description: "Understanding key principles" }
     ]
   },
   {
-    name: "Phase 2: Assessment",
+    name: "Situation Understanding",
     description: "Evaluating current status and needs",
     sub_phases: [
-      { name: "Sub-Phase 2.1: Initial Assessment", description: "Baseline evaluation" },
-      { name: "Sub-Phase 2.2: Needs Analysis", description: "Identifying specific requirements" }
+      { name: "Initial Assessment", description: "Baseline evaluation" },
+      { name: " Needs Analysis", description: "Identifying specific requirements" }
     ]
   },
   {
-    name: "Phase 3: Planning",
-    description: "Strategic planning and goal setting",
-    sub_phases: [
-      { name: "Sub-Phase 3.1: Goal Definition", description: "Setting clear objectives" },
-      { name: "Sub-Phase 3.2: Strategy Development", description: "Creating action plans" },
-      { name: "Sub-Phase 3.3: Resource Allocation", description: "Assigning resources and timeline" }
-    ]
-  },
-  {
-    name: "Phase 4: Implementation",
-    description: "Putting plans into action",
-    sub_phases: [
-      { name: "Sub-Phase 4.1: Execution", description: "Executing the plan" },
-      { name: "Sub-Phase 4.2: Monitoring", description: "Tracking progress" }
-    ]
-  },
-  {
-    name: "Phase 5: Learning",
+    name: "Learning",
     description: "Building knowledge and skills",
     sub_phases: [
-      { name: "Sub-Phase 5.1: Training", description: "Formal training activities" },
-      { name: "Sub-Phase 5.2: Skill Development", description: "Hands-on skill building" },
-      { name: "Sub-Phase 5.3: Knowledge Sharing", description: "Collaborative learning" }
+      { name: "Training", description: "Formal training activities" },
+      { name: "Skill Acquisition", description: "Hands-on skill building" },
+      { name: "Knowledge Sharing", description: "Collaborative learning" }
     ]
   },
   {
-    name: "Phase 6: Support",
+    name: "Planning",
+    description: "Strategic planning and goal setting",
+    sub_phases: [
+      { name: "Goal Definition", description: "Setting clear objectives" },
+      { name: "Strategy Development", description: "Creating action plans" },
+      { name: "Resource Allocation", description: "Assigning resources and timeline" }
+    ]
+  },
+  {
+    name: "Implementation",
+    description: "Putting plans into action",
+    sub_phases: [
+      { name: "Execution", description: "Executing the plan" },
+      { name: "Monitoring", description: "Tracking progress" }
+    ]
+  },
+  {
+    name: "Support",
     description: "Providing guidance and assistance",
     sub_phases: [
-      { name: "Sub-Phase 6.1: Ongoing Support", description: "Regular assistance and guidance" },
-      { name: "Sub-Phase 6.2: Mentoring", description: "One-on-one mentoring" }
+      { name: "Ongoing Support", description: "Regular assistance and guidance" },
+      { name: "Finding Mentors", description: "One-on-one mentoring" }
     ]
   },
   {
-    name: "Phase 7: Evaluation",
+    name: "Evaluation",
     description: "Assessing outcomes and results",
     sub_phases: [
-      { name: "Sub-Phase 7.1: Progress Review", description: "Reviewing milestones achieved" },
-      { name: "Sub-Phase 7.2: Impact Assessment", description: "Measuring overall impact" },
-      { name: "Sub-Phase 7.3: Feedback Collection", description: "Gathering feedback for improvement" }
+      { name: "Progress Review", description: "Reviewing milestones achieved" },
+      { name: "Impact Assessment", description: "Measuring overall impact" },
+      { name: "Feedback Collection", description: "Gathering feedback for improvement" }
     ]
   },
   {
-    name: "Phase 8: Integration",
+    name: "Action Phases",
     description: "Integrating learning and achievements",
     sub_phases: [
-      { name: "Sub-Phase 8.1: Documentation", description: "Recording lessons learned" },
-      { name: "Sub-Phase 8.2: Integration", description: "Integrating into daily practice" }
+      { name: "Documentation", description: "Recording lessons learned" },
+      { name: "Integration", description: "Integrating into daily practice" }
     ]
   },
   {
-    name: "Phase 9: Sustainability",
+    name: "Sustainability",
     description: "Ensuring long-term success",
     sub_phases: [
-      { name: "Sub-Phase 9.1: Maintenance", description: "Maintaining progress and skills" },
-      { name: "Sub-Phase 9.2: Continuous Improvement", description: "Ongoing enhancement" }
+      { name: "Maintenance", description: "Maintaining progress and skills" },
+      { name: "Continuous Improvement", description: "Ongoing enhancement" }
     ]
   },
   {
-    name: "Phase 10: Reflection & Closure",
+    name: "Reflection & Perseverance",
     description: "Reflecting on the journey and closing the cycle",
     sub_phases: [
-      { name: "Sub-Phase 10.1: Reflection", description: "Reflecting on experiences and growth" },
-      { name: "Sub-Phase 10.2: Closure", description: "Concluding the process" }
+      { name: "Reflection", description: "Reflecting on experiences and growth" },
+      { name: "Continuation", description: "Living the process" }
     ]
   }
 ]
