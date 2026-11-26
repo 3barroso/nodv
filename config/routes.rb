@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   resources :phases, only: [ :index, :show ]
   resources :resources, only: [ :index, :show ]
-  
+
   resources :authors, only: [ :show ]
   resources :user_requests, only: [ :new, :create ]
 
@@ -30,7 +30,7 @@ Rails.application.routes.draw do
     resources :resources, only: [ :create, :destroy, :edit, :index, :new, :update ] do
       post :preview, on: :collection
     end
-    
+
     resources :authors
     resources :users
     resources :user_requests, only: [ :destroy, :edit, :index, :update, :show ]

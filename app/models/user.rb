@@ -17,7 +17,7 @@ class User < ApplicationRecord
 
     def create_default_author
       return if authors.exists?
-      
+
       authors.create(pen_name: "Default Author")
     end
 end

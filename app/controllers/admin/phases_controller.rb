@@ -61,7 +61,7 @@ class Admin::PhasesController < Admin::BaseController
       format.json { render json: { success: true } }
       format.turbo_stream do
         @phases = Phase.main_phases.includes(:sub_phases).order(:position)
-        render turbo_stream: turbo_stream.replace('admin_phases_list', partial: 'admin/phases/list', locals: { phases: @phases })
+        render turbo_stream: turbo_stream.replace("admin_phases_list", partial: "admin/phases/list", locals: { phases: @phases })
       end
     end
   end
@@ -75,7 +75,7 @@ class Admin::PhasesController < Admin::BaseController
       format.json { render json: { success: true } }
       format.turbo_stream do
         @phases = Phase.main_phases.includes(:sub_phases).order(:position)
-        render turbo_stream: turbo_stream.replace('admin_phases_list', partial: 'admin/phases/list', locals: { phases: @phases })
+        render turbo_stream: turbo_stream.replace("admin_phases_list", partial: "admin/phases/list", locals: { phases: @phases })
       end
     end
   end

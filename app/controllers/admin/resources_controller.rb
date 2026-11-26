@@ -43,7 +43,7 @@ class Admin::ResourcesController < Admin::BaseController
         redirect_to root_path, alert: "Access Denied."
       end
     end
-    
+
     def resource_params
       params.require(:resource).permit(:name, :description, :status, :author_id)
     end
