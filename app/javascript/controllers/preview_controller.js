@@ -12,6 +12,16 @@ export default class extends Controller {
   ];
   static values = { url: String };
 
+  connect() {
+    this.#assignInternalTextareaIds();
+    this.textareaObserver = new MutationObserver(() => this.#assignInternalTextareaIds());
+    this.textareaObserver.observe(this.editorContentTarget, { childList: true, subtree: true });
+  }
+
+  disconnect() {
+    this.textareaObserver?.disconnect();
+  }
+
   editor(event) {
     event.preventDefault();
     this.#toggleButton(this.editorButtonTarget, this.previewButtonTarget);
@@ -38,5 +48,24 @@ export default class extends Controller {
     // Hide one pane and show the other
     show.classList.remove("hidden");
     hide.classList.add("hidden");
+  }
+
+  #assignInternalTextareaIds() {
+    const editorId = this.editorContentTarget.id || "resource-description";
+
+    this.editorContentTarget.querySelectorAll("textarea:not([id])").forEach((textarea) => {
+      let id;
+      let index = 0;
+
+      do {
+        id = `${editorId}_internal_${++index}`;
+      } while (document.getElementById(id));
+
+      textarea.id = id;
+
+      if (textarea.classList.contains("lexxy-caption-editor") && !textarea.hasAttribute("aria-label")) {
+        textarea.setAttribute("aria-label", "Image caption");
+      }
+    });
   }
 }
