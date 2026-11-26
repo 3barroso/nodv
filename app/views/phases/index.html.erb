@@ -1,9 +1,25 @@
 <section class="mx-auto max-w-7xl space-y-10">
-  <header class="border-b border-slate-200 pb-5">
-    <h1 class="text-3xl font-bold text-slate-900">Phases</h1>
+  <header class="space-y-6">
+    <div class="overflow-hidden rounded-lg bg-slate-950 shadow-xs">
+      <%= image_tag "purple_support.webp", alt: "A supportive community gathered together", class: "h-[280px] w-full object-cover sm:h-[360px] lg:h-[200px]" %>
+    </div>
+
+    <div class="mx-auto max-w-4xl space-y-4 text-center">
+      <h1 class="text-3xl font-bold text-slate-900">Nodv</h1>
+      <p class="text-base leading-7 text-slate-600">
+        Nodv is a confidential place to find clear information, practical resources, and support at each stage of a journey.
+        Browse the timeline below to explore the phases and the resources available within them.
+        Select a phase name to open its dedicated page, or use the arrow beside each name to show or hide that section.
+        When you need help, move between the phases and resource cards to find information that fits your needs.
+      </p>
+    </div>
   </header>
 
-  <% @phases.each do |phase| %>
-    <%= render "phase_resource_section", phase: phase, phase_resources: @phase_resources_by_phase_id.fetch(phase.id, []), sub_phases: @sub_phases_by_parent_id.fetch(phase.id, []) %>
-  <% end %>
+  <div class="border-t border-slate-200 pt-8">
+    <h2 class="mb-8 text-3xl font-bold text-slate-900">Timeline</h2>
+
+    <% @phases.each do |phase| %>
+      <%= render "phase_resource_section", phase: phase, phase_resources: @phase_resources_by_phase_id.fetch(phase.id, []), sub_phases: @sub_phases_by_parent_id.fetch(phase.id, []) %>
+    <% end %>
+  </div>
 </section>
