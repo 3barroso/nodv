@@ -5,10 +5,7 @@ class ResourcesController < ApplicationController
 
 
   def index
-    @phases = Phase.main_phases.includes(:sub_phases)
-    @phase_options = @phases.flat_map do |phase|
-      [ [ phase.name, phase.id ] ] + phase.sub_phases.map { |sub_phase| [ "#{phase.name} / #{sub_phase.name}", sub_phase.id ] }
-    end
+    @phase_options = Phase.main_phases.map { |phase| [ phase.name, phase.id ] }
     @audience_types = AudienceType.order(:name)
     @sort = %w[created_at_desc created_at_asc].include?(params[:sort]) ? params[:sort] : "created_at_desc"
     @phase_id = Phase.where(id: params[:phase_id]).pick(:id)&.to_s

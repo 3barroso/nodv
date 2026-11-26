@@ -48,6 +48,7 @@
 									Not assigned
 								<% end %>
 							</p>
+              <p class="text-sm text-gray-500"><%= resource.audience_types.map(&:name).join(", ").presence || "No audience types assigned" %></p>
 						</div>
 						<%= link_to "View resource", resource_path(resource), class: "inline-flex shrink-0 items-center rounded-md border border-slate-300 px-3 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50" %>
 					</li>

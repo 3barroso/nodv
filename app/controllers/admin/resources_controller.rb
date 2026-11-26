@@ -1,6 +1,7 @@
 class Admin::ResourcesController < Admin::BaseController
   before_action :set_resource, only: [ :edit, :update, :destroy ]
   before_action :ensure_resource_access, only: [ :edit, :update, :destroy ]
+  before_action :set_audience_types, only: [ :edit, :update ]
 
   def create
   end
@@ -21,7 +22,7 @@ class Admin::ResourcesController < Admin::BaseController
   end
 
   def index
-    @resources = Resource.all.includes(:phases)
+    @resources = Resource.all.includes(:phases, :audience_types)
   end
 
   def new
@@ -38,6 +39,10 @@ class Admin::ResourcesController < Admin::BaseController
       @resource = Resource.find(params[:id])
     end
 
+    def set_audience_types
+      @audience_types = AudienceType.order(:name)
+    end
+
     def ensure_resource_access
       unless @resource.manageable_by?(current_user)
         redirect_to root_path, alert: "Access Denied."
@@ -45,6 +50,6 @@ class Admin::ResourcesController < Admin::BaseController
     end
 
     def resource_params
-      params.require(:resource).permit(:name, :description, :status, :author_id)
+      params.require(:resource).permit(:name, :description, :status, :author_id, audience_type_ids: [])
     end
 end

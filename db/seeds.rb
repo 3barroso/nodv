@@ -280,7 +280,7 @@ resource_names = [
   "Resource Library Index"
 ]
 
-audience_types = AudienceType.all
+audience_types = AudienceType.order(:id).to_a
 
 resource_count = 0
 users.each do |email, user|
@@ -289,7 +289,7 @@ users.each do |email, user|
     num_resources = rand(5..10)
 
     num_resources.times do |i|
-      resource_name = "#{resource_names[i % resource_names.length]} - #{author.pen_name}"
+      resource_name = "#{resource_names[i % resource_names.length]}"
 
       sample_markdown = <<~MD
         ## #{resource_name}
@@ -330,11 +330,9 @@ users.each do |email, user|
         PhaseResource.find_or_create_by!(phase_id: phase.id, resource_id: resource.id)
       end
 
-      # Assign to random audience types
-      audience_types_to_assign = audience_types.sample(rand(1..3))
-      audience_types_to_assign.each do |audience_type|
-        ResourceAudienceType.find_or_create_by!(resource_id: resource.id, audience_type_id: audience_type.id)
-      end
+      # Rotate through audience combinations so seed runs produce repeatable selections.
+      audience_types_to_assign = audience_types.rotate(i % audience_types.length).first((i % 3) + 1)
+      resource.audience_types = audience_types_to_assign
 
       resource_count += 1
     end

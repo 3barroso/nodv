@@ -27,6 +27,11 @@
         <%= form.select :status, Resource.statuses.keys.map { |value| [value.titleize, value] }, {}, id: "admin_resource_status", class: "mt-1 block rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" %>
       </div>
 
+      <div>
+        <%= form.label :audience_type_ids, "Audience types", class: "block text-sm font-medium text-slate-700", for: "admin_resource_audience_type_ids" %>
+        <%= form.collection_select :audience_type_ids, @audience_types, :id, :name, { include_hidden: false }, { id: "admin_resource_audience_type_ids", multiple: true, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" } %>
+      </div>
+
       <div class="my-5">
         <button data-action="click->preview#editor" data-preview-target="editorButton" type="button" class="inline-flex items-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700">
           Write

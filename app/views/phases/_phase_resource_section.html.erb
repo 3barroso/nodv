@@ -24,7 +24,9 @@
           <% phase_resources.each do |phase_resource| %>
             <li>
               <%= link_to resource_path(phase_resource.resource), class: "flex min-h-24 h-full items-center rounded-md border border-slate-200 bg-white p-4 text-sm font-medium text-slate-900 shadow-xs transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" do %>
-                <span class="line-clamp-3"><%= phase_resource.resource.name %></span>
+                <span class="line-clamp-3"><%= phase_resource.resource.name %>
+                <p class="text-sm text-slate-500"><%= phase_resource.resource.audience_types.map(&:name).join(", ").presence || "No audience types assigned" %></p>
+                </span>
               <% end %>
             </li>
           <% end %>

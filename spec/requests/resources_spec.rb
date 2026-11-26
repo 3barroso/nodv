@@ -43,7 +43,7 @@ RSpec.describe 'Resources', type: :request do
       expect(response.body).not_to include(other_audience_resource.name, other_phase_resource.name, draft_resource.name)
     end
 
-    it 'defaults to newest first and provides both parent and sub-phase filters' do
+    it 'defaults to newest first and offers top-level phases in the filter' do
       parent_phase = create(:phase, name: 'Planning')
       sub_phase = create(:phase, name: 'Scoping', parent: parent_phase)
       author = create(:user, email: 'resources-sort@example.com').authors.first
@@ -56,7 +56,9 @@ RSpec.describe 'Resources', type: :request do
 
       expect(response).to have_http_status(:ok)
       expect(response.body.index(newer_resource.name)).to be < response.body.index(older_resource.name)
-      expect(response.body).to include(parent_phase.name, "#{parent_phase.name} / #{sub_phase.name}")
+      phase_options = Nokogiri::HTML(response.body).css("#phase_id option")
+      expect(phase_options.map(&:text)).to include("All phases", parent_phase.name)
+      expect(phase_options.map { |option| option["value"] }).not_to include(sub_phase.id.to_s)
     end
   end
 end

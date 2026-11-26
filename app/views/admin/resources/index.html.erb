@@ -9,6 +9,7 @@
           <div>
             <h2 class="text-xl font-semibold text-slate-900"><%= resource.name %></h2>
             <p class="text-sm text-gray-500"><%= resource.phases.first&.name || "No phase assigned" %></p>
+            <p class="text-sm text-gray-500"><%= resource.audience_types.map(&:name).join(", ").presence || "No audience types assigned" %></p>
           </div>
 
           <div class="flex flex-wrap items-center justify-end gap-2">

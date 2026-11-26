@@ -8,11 +8,12 @@ class PhasesController < ApplicationController
       [ phase.id, *@sub_phases_by_parent_id.fetch(phase.id, []).map(&:id) ]
     end
     @phase_resources_by_phase_id = if phase_ids.any?
-      PhaseResource.includes(:resource)
+      PhaseResource.includes(resource: [:resource_audience_types])
         .joins(:resource)
         .where(phase_id: phase_ids, resources: { status: Resource.statuses[:published] })
         .order("resources.name")
         .group_by(&:phase_id)
+
     else
       {}
     end
