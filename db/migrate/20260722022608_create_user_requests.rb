@@ -1,7 +1,6 @@
 class CreateUserRequests < ActiveRecord::Migration[8.1]
   def change
     create_table :user_requests do |t|
-
       t.string :email, null: false
       t.string :first_name
       t.string :last_name
@@ -21,6 +20,6 @@ class CreateUserRequests < ActiveRecord::Migration[8.1]
 
     add_index :user_requests, :email
     add_index :user_requests, :email, unique: true, where: "reviewed = false", name: "index_user_requests_on_unreviewed_email"
-    add_index :user_requests, [:reviewed, :created_at]
+    add_index :user_requests, [ :reviewed, :created_at ]
   end
 end

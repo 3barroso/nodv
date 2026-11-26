@@ -27,6 +27,12 @@ class Admin::ResourcesController < Admin::BaseController
   def new
   end
 
+  def preview
+    content = ActionText::Content.new(params[:body].to_s)
+    @preview_html = helpers.render_action_text_content(content)
+    render turbo_stream: turbo_stream.update("preview", @preview_html)
+  end
+
   private
     def set_resource
       @resource = Resource.find(params[:id])
@@ -37,7 +43,7 @@ class Admin::ResourcesController < Admin::BaseController
         redirect_to root_path, alert: "Access Denied."
       end
     end
-    
+
     def resource_params
       params.require(:resource).permit(:name, :description, :status, :author_id)
     end

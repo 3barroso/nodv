@@ -1,5 +1,5 @@
 <div class="max-w-4xl space-y-8">
-  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
     <div class="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
       <div>
         <h1 class="text-4xl font-bold text-slate-900">New phase</h1>
@@ -12,7 +12,7 @@
     </div>
   </section>
 
-  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+  <section class="rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
     <%# show parent if present %>
     <% if @parent.present? %>
       <h2 class="text-2xl font-semibold text-slate-900">New sub-phase for <%= @parent.name %></h2>
@@ -37,12 +37,12 @@
 
       <div>
         <%= form.label :name, class: "block text-sm font-medium text-slate-700" %>
-        <%= form.text_field :name, id: "admin_phase_name", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+        <%= form.text_field :name, id: "admin_phase_name", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" %>
       </div>
 
       <div>
         <%= form.label :description, class: "block text-sm font-medium text-slate-700" %>
-        <%= form.text_area :description, id: "admin_phase_description", rows: 6, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+        <%= form.text_area :description, id: "admin_phase_description", rows: 6, class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" %>
         <p class="mt-2 text-sm text-gray-500">A short description for admins. This is visible in the admin listing.</p>
       </div>
 
