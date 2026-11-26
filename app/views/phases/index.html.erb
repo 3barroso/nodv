@@ -4,10 +4,6 @@
   </header>
 
   <% @phases.each do |phase| %>
-    <%= render "phase_resource_section", phase: phase, phase_resources: @phase_resources_by_phase_id.fetch(phase.id, []) %>
-
-    <% @sub_phases_by_parent_id.fetch(phase.id, []).each do |sub_phase| %>
-      <%= render "phase_resource_section", phase: sub_phase, phase_resources: @phase_resources_by_phase_id.fetch(sub_phase.id, []), nested: true %>
-    <% end %>
+    <%= render "phase_resource_section", phase: phase, phase_resources: @phase_resources_by_phase_id.fetch(phase.id, []), sub_phases: @sub_phases_by_parent_id.fetch(phase.id, []) %>
   <% end %>
 </section>

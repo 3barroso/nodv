@@ -1,20 +1,40 @@
-<section class="border-b border-slate-200 pb-8 <%= 'ml-6 border-l-2 border-l-slate-200 pl-6' if local_assigns[:nested] %>">
-  <header class="mb-5 flex flex-wrap items-baseline justify-between gap-3">
-    <h2 class="text-2xl font-semibold text-slate-900"><%= phase.name %></h2>
-    <%= link_to "View phase", phase_path(phase), class: "rounded text-sm font-medium text-blue-700 underline decoration-transparent underline-offset-4 hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" %>
+<section class="border-b border-slate-200 pb-8 <%= 'ml-6 border-l-2 border-l-slate-200 pl-6' if local_assigns[:nested] %>" data-controller="phase-disclosure" data-phase-disclosure-name-value="<%= phase.name %>">
+  <header class="mb-5">
+    <div class="flex items-start gap-3">
+      <button type="button" data-action="click->phase-disclosure#toggle" data-phase-disclosure-target="button" aria-expanded="true" aria-label="Collapse <%= phase.name %> section" class="mt-1 inline-flex size-8 shrink-0 items-center justify-center rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700">
+        <span aria-hidden="true" data-phase-disclosure-target="icon" class="size-2 rotate-180 border-b-2 border-r-2 border-current transition-transform"></span>
+      </button>
+
+      <div>
+        <% if local_assigns[:nested] %>
+          <h3 class="text-xl font-semibold text-slate-900"><%= link_to phase.name, phase_path(phase), class: "rounded underline decoration-transparent underline-offset-4 hover:text-blue-700 hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" %></h3>
+        <% else %>
+          <h2 class="text-2xl font-semibold text-slate-900"><%= link_to phase.name, phase_path(phase), class: "rounded underline decoration-transparent underline-offset-4 hover:text-blue-700 hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" %></h2>
+        <% end %>
+        <% if phase.summary.present? || phase.description.present? %>
+          <p class="mt-2 max-w-3xl text-sm leading-6 text-slate-600"><%= phase.summary.presence || phase.description %></p>
+        <% end %>
+      </div>
+    </div>
   </header>
 
-  <% if phase_resources.any? %>
-    <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7">
-      <% phase_resources.each do |phase_resource| %>
-        <li>
-          <%= link_to resource_path(phase_resource.resource), class: "flex min-h-24 h-full items-center rounded-md border border-slate-200 bg-white p-4 text-sm font-medium text-slate-900 shadow-xs transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" do %>
-            <span class="line-clamp-3"><%= phase_resource.resource.name %></span>
+  <div data-phase-disclosure-target="content">
+      <% if phase_resources.any? %>
+        <ul class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-7">
+          <% phase_resources.each do |phase_resource| %>
+            <li>
+              <%= link_to resource_path(phase_resource.resource), class: "flex min-h-24 h-full items-center rounded-md border border-slate-200 bg-white p-4 text-sm font-medium text-slate-900 shadow-xs transition hover:border-blue-300 hover:bg-blue-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700" do %>
+                <span class="line-clamp-3"><%= phase_resource.resource.name %></span>
+              <% end %>
+            </li>
           <% end %>
-        </li>
+        </ul>
+      <% else %>
+        <p class="text-sm text-slate-500">No published resources in this phase yet.</p>
       <% end %>
-    </ul>
-  <% else %>
-    <p class="text-sm text-slate-500">No published resources in this phase yet.</p>
-  <% end %>
+
+      <% local_assigns.fetch(:sub_phases, []).each do |sub_phase| %>
+        <%= render "phase_resource_section", phase: sub_phase, phase_resources: @phase_resources_by_phase_id.fetch(sub_phase.id, []), nested: true %>
+      <% end %>
+  </div>
 </section>

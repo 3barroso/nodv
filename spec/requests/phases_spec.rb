@@ -29,6 +29,10 @@ RSpec.describe 'Phases', type: :request do
       expect(response.body.index(second_sub_phase.name)).to be < response.body.index(second_sub_resource.name)
       expect(response.body).not_to include(draft_resource.name)
       expect(response.body).to include(resource_path(parent_resource), resource_path(sub_resource), resource_path(second_sub_resource))
+
+      document = Nokogiri::HTML(response.body)
+      expect(document.css("button[data-phase-disclosure-target='button'][aria-expanded='true']").count).to eq(Phase.count)
+      expect(document.at_css("h2 a[href='#{phase_path(first_phase)}']")&.text).to eq(first_phase.name)
     end
   end
 
