@@ -22,7 +22,7 @@
 <section>
 	<h2 class="text-2xl font-semibold text-slate-900 mb-4">Pending requests</h2>
 	<% if @pending_user_requests.any? %>
-		<ul class="divide-y divide-slate-100 bg-white rounded-lg shadow-sm overflow-hidden">
+		<ul class="divide-y divide-slate-100 bg-white rounded-lg shadow-xs overflow-hidden">
 			<% @pending_user_requests.each do |req| %>
 				<% status = if req.approved?
 											:approved

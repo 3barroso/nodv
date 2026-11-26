@@ -4,7 +4,7 @@
 <% if @resources.any? %>
   <div class="space-y-4">
     <% @resources.each do |resource| %>
-      <article class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <article class="border border-gray-200 rounded-xl overflow-hidden shadow-xs">
         <div class="grid sm:grid-cols-[minmax(0,1fr)_auto] gap-4 px-4 py-4 bg-white items-center">
           <div>
             <h2 class="text-xl font-semibold text-slate-900"><%= resource.name %></h2>

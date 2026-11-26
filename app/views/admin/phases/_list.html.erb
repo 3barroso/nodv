@@ -1,7 +1,7 @@
 <div id="admin_phases_list">
   <div class="space-y-4">
     <% phases.each do |phase| %>
-      <article id="<%= dom_id(phase) %>" class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+      <article id="<%= dom_id(phase) %>" class="border border-gray-200 rounded-xl overflow-hidden shadow-xs">
         <div class="grid sm:grid-cols-[minmax(0,1fr)_auto] gap-4 px-4 py-4 bg-white items-center">
           <div class="flex items-start gap-3">
             <div class="order-controls hidden" data-phase-id="<%= phase.id %>">

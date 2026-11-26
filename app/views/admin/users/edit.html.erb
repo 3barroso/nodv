@@ -1,21 +1,21 @@
-<div class="max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+<div class="max-w-3xl rounded-xl border border-gray-200 bg-white p-6 shadow-xs">
   <h1 class="text-4xl font-bold text-slate-900">Edit profile</h1>
   <p class="mt-2 text-sm text-gray-600">Update your account information.</p>
 
   <%= form_with model: [:admin, @user], class: "mt-6 space-y-5" do |form| %>
     <div>
       <%= form.label :email, class: "block text-sm font-medium text-slate-700", for: "admin_user_email" %>
-      <%= form.email_field :email, id: "admin_user_email", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+      <%= form.email_field :email, id: "admin_user_email", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" %>
     </div>
 
     <div>
       <%= form.label :password, class: "block text-sm font-medium text-slate-700", for: "admin_user_password" %>
-      <%= form.password_field :password, id: "admin_user_password", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+      <%= form.password_field :password, id: "admin_user_password", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" %>
     </div>
 
     <div>
       <%= form.label :password_confirmation, class: "block text-sm font-medium text-slate-700", for: "admin_user_password_confirmation" %>
-      <%= form.password_field :password_confirmation, id: "admin_user_password_confirmation", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-sm focus:border-slate-500 focus:outline-none focus:ring-slate-500" %>
+      <%= form.password_field :password_confirmation, id: "admin_user_password_confirmation", class: "mt-1 block w-full rounded-md border border-gray-300 px-3 py-2 shadow-xs focus:border-slate-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-slate-700" %>
     </div>
 
     <div class="flex flex-wrap gap-2">

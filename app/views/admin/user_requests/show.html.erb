@@ -13,9 +13,9 @@
     <% end %>
     <div class="mt-4">
       <% if current_user&.admin? %>
-        <%= link_to "Review", edit_admin_user_request_path(@user_request), class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+        <%= link_to "Review", edit_admin_user_request_path(@user_request), class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700" %>
       <% else %>
-        <%= link_to "Edit", edit_admin_user_request_path(@user_request), class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500" %>
+        <%= link_to "Edit", edit_admin_user_request_path(@user_request), class: "inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-white hover:bg-indigo-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-700" %>
       <% end %>
     </div>
   </div>
