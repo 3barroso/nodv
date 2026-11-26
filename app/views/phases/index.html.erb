@@ -1,102 +1,13 @@
-<section class="mb-8">
-  <h1 class="text-4xl font-bold mb-8">Phases</h1>
+<section class="mx-auto max-w-7xl space-y-10">
+  <header class="border-b border-slate-200 pb-5">
+    <h1 class="text-3xl font-bold text-slate-900">Phases</h1>
+  </header>
 
-  <p>add dropdown to allow different person viewer for timeline</p>
-  <p> make different viewpoint model have descriptions that show up on the side right panel </p>
-  
-  <div class="flex gap-6 h-screen">
-    <!-- Left sidebar: Phase list -->
-    <aside class="w-64 border-r border-gray-300 overflow-y-auto pr-4">
-      <nav class="space-y-2" id="phases-nav">
-        <% @phases.main_phases.each do |phase| %>
-          <!-- Main phase -->
-          <button 
-            type="button"
-            data-phase-id="<%= phase.id %>"
-            class="phase-link w-full text-left px-4 py-3 rounded-lg font-semibold text-lg text-blue-700 hover:bg-blue-50 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-            tabindex="0"
-          >
-            <%= phase.name %>
-          </button>
-          
-          <!-- Sub-phases -->
-          <% if phase.sub_phases.any? %>
-            <div class="ml-6 space-y-1 border-l-2 border-gray-300 pl-4">
-              <% phase.sub_phases.each do |sub_phase| %>
-                <button 
-                  type="button"
-                  data-phase-id="<%= sub_phase.id %>"
-                  class="phase-link w-full text-left px-3 py-2 rounded text-gray-700 hover:bg-gray-100 transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-700"
-                  tabindex="0"
-                >
-                  • <%= sub_phase.name %>
-                </button>
-              <% end %>
-            </div>
-          <% end %>
-        <% end %>
-      </nav>
-    </aside>
-    
-    <!-- Right side: Detail panel -->
-    <main class="flex-1 overflow-y-auto pl-4">
-      <div id="phase-detail" class="space-y-4">
-        <div id="phase-loading" class="text-gray-400 text-center py-12">
-          Select a phase to view details
-        </div>
-      </div>
-    </main>
-  </div>
+  <% @phases.each do |phase| %>
+    <%= render "phase_resource_section", phase: phase, phase_resources: @phase_resources_by_phase_id.fetch(phase.id, []) %>
+
+    <% @sub_phases_by_parent_id.fetch(phase.id, []).each do |sub_phase| %>
+      <%= render "phase_resource_section", phase: sub_phase, phase_resources: @phase_resources_by_phase_id.fetch(sub_phase.id, []), nested: true %>
+    <% end %>
+  <% end %>
 </section>
-
-<script type="module">
-  document.addEventListener('DOMContentLoaded', () => {
-    const phaseLinks = document.querySelectorAll('.phase-link');
-    const detailPanel = document.getElementById('phase-detail');
-    
-    phaseLinks.forEach(link => {
-      link.addEventListener('click', handlePhaseClick);
-      link.addEventListener('keydown', handlePhaseKeydown);
-    });
-    
-    function handlePhaseClick(event) {
-      event.preventDefault();
-      const phaseId = event.currentTarget.dataset.phaseId;
-      loadPhaseDetail(phaseId, event.currentTarget);
-    }
-    
-    function handlePhaseKeydown(event) {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        handlePhaseClick(event);
-      }
-    }
-    
-    function loadPhaseDetail(phaseId, buttonElement) {
-      // Update active state
-      phaseLinks.forEach(link => link.classList.remove('bg-blue-100', 'ring-2', 'ring-blue-500'));
-      buttonElement.classList.add('bg-blue-100', 'ring-2', 'ring-blue-500');
-      
-      // Fetch phase details
-      fetch(`/phases/${phaseId}`)
-        .then(response => response.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(html, 'text/html');
-
-          // Try several selectors to find the phase content. Some views render inside <main>,
-          // others render a centered container. Fall back to the whole body if necessary.
-          const phaseContent = doc.querySelector('main')
-            || doc.querySelector('.mx-auto.max-w-5xl')
-            || doc.querySelector('.mx-auto')
-            || doc.body;
-
-          detailPanel.innerHTML = phaseContent ? phaseContent.innerHTML : '<p>No details available</p>';
-        })
-        .catch(error => {
-          console.error('Error loading phase:', error);
-          detailPanel.innerHTML = '<p class="text-red-500">Error loading phase details</p>';
-        });
-    }
-  });
-</script>
